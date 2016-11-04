@@ -47,24 +47,9 @@ function init(){
 
   // Query the URL for parameters
   var query = QueryString();
-  if(query){jQuery("#interface").append("<h4>" + "Byggesag: " + query.ID + "</h4>");}
+  if(query){jQuery("#interface").prepend("<h4>" + "Byggesag: " + query.ID + "</h4>");}
 
   // Start loading geometry and attributes from MSSQL server with ID
-  var geometry = L.featureGroup([L.geoJSON(json1), L.geoJSON(json2)]).addTo(map);
-
-  geometry.eachLayer(function(layer) {
-      layer.on('click', function(){
-
-        var geoKey = Object.keys(this._layers);
-        var geoStyle = this._layers[Number(geoKey)].options;
-        var geoFeature = this._layers[Number(geoKey)].feature;
-        var geoProperties = geoFeature.properties;
-
-        jQuery("#attr").html(infoPanel(geoProperties));
-      });
-  });
-
-
-
-
+  geometry = L.featureGroup([L.geoJSON(json1), L.geoJSON(json2)]).addTo(map);
+  interface();
 }

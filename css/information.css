@@ -17,16 +17,17 @@
 }
 
 #attr{
-  position: absolute;;
+  position: absolute;
   color: white;
   height: 100px;
-  width: 200px;
+  width: 300px;
   padding: 10px;
   left: 0;
   bottom: 0;
+  padding-left: 50px;
   z-index: 1010;
   background: #333;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  border-top: 1px solid black;
 }
 
 td{
@@ -34,6 +35,8 @@ td{
   padding-right: 10px;
   padding-top: 4px;
   padding-bottom: 4px;
+  border: 1px solid #666;
+  min-width: 70px;
 }
 
 .boolean{
