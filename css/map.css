@@ -1,0 +1,12 @@
+#map{
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+/* We're using !important to overwrite basic leaflet styles here */
+.leaflet-control-layers{
+  background: #333 !important;
+  color: #fff !important;
+  border-radius: 0 !important ;
+}
