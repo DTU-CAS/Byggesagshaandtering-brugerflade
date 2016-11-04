@@ -35,3 +35,11 @@ td{
   padding-top: 4px;
   padding-bottom: 4px;
 }
+
+.boolean{
+  color: rgb(236, 215, 52);
+}
+
+.number{
+  color: rgb(27, 171, 224);
+}
