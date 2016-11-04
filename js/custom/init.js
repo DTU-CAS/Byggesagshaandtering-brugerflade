@@ -1,25 +1,9 @@
 // Initialize the interface
 
 function init(){
-  // Query the URL for parameters
-  var query = QueryString();
-  if(query){jQuery("#interface").append("<h4>" + "Byggesag: " + query.ID + "</h4>");}
-
-  // Start loading geometry and attributes from MSSQL server with ID
-
-  // placeholder loader
-  function spin(){
-    jQuery("body").append("<div class='spinner'></div>");
-    setTimeout(endLoad, 3000);
-    function endLoad(){
-      jQuery(".spinner").remove();
-    }
-  }
-  spin();
-
   // create the map
   map = L.map('map', {
-    center: [55.783014, 12.519372],
+    center: [55.787016, 12.522536],
     zoom: 17,
     maxZoom: 21,
     minZoom: 14,
@@ -53,6 +37,33 @@ function init(){
   };
 
   L.control.layers(basemaps, {}, {collapsed: false}).addTo(map);
+
+  // map.on('click', function(e) {
+  //   console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+  // });
+
+  // Placeholder spinner
+  // spin();
+
+  // Query the URL for parameters
+  var query = QueryString();
+  if(query){jQuery("#interface").append("<h4>" + "Byggesag: " + query.ID + "</h4>");}
+
+  // Start loading geometry and attributes from MSSQL server with ID
+  var geometry = L.featureGroup([L.geoJSON(json1), L.geoJSON(json2)]).addTo(map);
+
+  geometry.eachLayer(function(layer) {
+      layer.on('click', function(){
+
+        var geoKey = Object.keys(this._layers);
+        var geoStyle = this._layers[Number(geoKey)].options;
+        var geoFeature = this._layers[Number(geoKey)].feature;
+        var geoProperties = geoFeature.properties;
+
+        jQuery("#attr").html(infoPanel(geoProperties));
+      });
+  });
+
 
 
 
