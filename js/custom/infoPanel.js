@@ -1,6 +1,6 @@
 /*
  * This script takes an object and creates a bootstrap editable table
- * Requires: Bootstrap & glyphicon
+ * Requires: Bootstrap & font-awesome
  * Based upon: Codepen user - Ash Blue
  * Author: NIRAS - Casper Fibæk
  */
@@ -8,7 +8,7 @@
 function infoPanel(obj){
   var table =
     "<div id='objTable' class='table-editable'>" +
-      "<span class='table-add glyphicon glyphicon-plus'></span>" +
+      "<i class='fa fa-plus' aria-hidden='true'></i>" +
       "<table class='table'>";
 
   var keys = Object.keys(obj);
@@ -27,14 +27,14 @@ function infoPanel(obj){
   function addRow(key, attribute, addClass){
     var row =
       "<tr class='table-row'>" +
-        "<td contenteditable='false' " + "class='" + addClass + "'>" + key + "</td>" +
-        "<td contenteditable='true'>" + attribute + "</td>" +
+        "<td contenteditable='false'>" + key + "</td>" +
+        "<td contenteditable='true' " + "class='" + addClass + "'>" + attribute + "</td>" +
         "<td>" +
-          "<span class='table-remove glyphicon glyphicon-remove'></span>" +
+          "<i class='fa fa-times' aria-hidden='true'></i>" +
         "</td>" +
         "<td>" +
-          "<span class='table-up glyphicon glyphicon-arrow-up'></span>" +
-          "<span class='table-down glyphicon glyphicon-arrow-down'></span>" +
+          "<i class='fa fa-plus' aria-hidden='true'></i>" +
+          "<i class='fa fa-minus' aria-hidden='true'></i>" +
         "</td>" +
       "</tr>";
     return row;
@@ -45,25 +45,58 @@ function infoPanel(obj){
 
 /*
 
-      <tr>
-        <th>Name</th>
-        <th>Value</th>
-        <th></th>
-        <th></th>
-      </tr>
-      <tr>
-        <td contenteditable="true">Stir Fry</td>
-        <td contenteditable="true">stir-fry</td>
-        <td>
-          <span class="table-remove glyphicon glyphicon-remove"></span>
-        </td>
-        <td>
-          <span class="table-up glyphicon glyphicon-arrow-up"></span>
-          <span class="table-down glyphicon glyphicon-arrow-down"></span>
-        </td>
-      </tr>
-      <!-- This is our clonable table line -->
+var $TABLE = $('#table');
+var $BTN = $('#export-btn');
+var $EXPORT = $('#export');
 
-    </table>
-  </div>
+$('.table-add').click(function () {
+  var $clone = $TABLE.find('tr.hide').clone(true).removeClass('hide table-line');
+  $TABLE.find('table').append($clone);
+});
+
+$('.table-remove').click(function () {
+  $(this).parents('tr').detach();
+});
+
+$('.table-up').click(function () {
+  var $row = $(this).parents('tr');
+  if ($row.index() === 1) return; // Don't go above the header
+  $row.prev().before($row.get(0));
+});
+
+$('.table-down').click(function () {
+  var $row = $(this).parents('tr');
+  $row.next().after($row.get(0));
+});
+
+// A few jQuery helpers for exporting only
+jQuery.fn.pop = [].pop;
+jQuery.fn.shift = [].shift;
+
+$BTN.click(function () {
+  var $rows = $TABLE.find('tr:not(:hidden)');
+  var headers = [];
+  var data = [];
+
+  // Get the headers (add special header logic here)
+  $($rows.shift()).find('th:not(:empty)').each(function () {
+    headers.push($(this).text().toLowerCase());
+  });
+
+  // Turn all existing rows into a loopable array
+  $rows.each(function () {
+    var $td = $(this).find('td');
+    var h = {};
+
+    // Use the headers from earlier to name our hash keys
+    headers.forEach(function (header, i) {
+      h[header] = $td.eq(i).text();
+    });
+
+    data.push(h);
+  });
+
+  // Output the result
+  $EXPORT.text(JSON.stringify(data));
+});
 */
