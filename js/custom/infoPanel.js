@@ -8,21 +8,23 @@
 function infoPanel(obj){
   var table =
     "<div id='objTable' class='table-editable'>" +
-      "<i class='fa fa-plus' aria-hidden='true'></i>" +
       "<table class='table'>";
 
   var keys = Object.keys(obj);
 
   for (var i = 0; i < keys.length; i++) {
-      if(typeof(obj[keys[i]]) === "number"){
-        table += addRow(keys[i], obj[keys[i]], "number");
-      } else if(obj[keys[i]] === "boolean" || obj[keys[i]] === "true" || obj[keys[i]] === "false"){
+      if(typeof(obj[keys[i]]) === "boolean" || obj[keys[i]] === "true" || obj[keys[i]] === "false"){
         table += addRow(keys[i], obj[keys[i]], "boolean");
+      } else if(isNaN(obj[keys[i]]) !== "false"){
+        table += addRow(keys[i], obj[keys[i]], "number");
       } else {
         table += addRow(keys[i], obj[keys[i]], "string");
       }
   }
-  table += "</table></div>";
+  table +=
+        "</table>" +
+        "<i class='fa fa-plus' aria-hidden='true'></i>" +
+        "</div>";
 
   function addRow(key, attribute, addClass){
     var row =
@@ -32,13 +34,13 @@ function infoPanel(obj){
         "<td>" +
           "<i class='fa fa-times' aria-hidden='true'></i>" +
         "</td>" +
-        "<td>" +
-          "<i class='fa fa-plus' aria-hidden='true'></i>" +
-          "<i class='fa fa-minus' aria-hidden='true'></i>" +
-        "</td>" +
       "</tr>";
     return row;
   }
+
+  jQuery("#objTable > i").click(function(){
+    jQuery("#objTable > table > tbody").append(addRow("unNames", "editMe", "string"));
+  });
 
   return table;
 }
