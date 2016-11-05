@@ -6,6 +6,7 @@ function interface(){
         var geoStyle = this._layers[Number(geoKey)].options;
         var geoFeature = this._layers[Number(geoKey)].feature;
         var geoProperties = geoFeature.properties;
+        bob = geoProperties;
 
         jQuery("#attr").html(infoPanel(geoProperties));
       });

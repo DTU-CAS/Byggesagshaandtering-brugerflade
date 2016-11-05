@@ -52,4 +52,6 @@ function init(){
   // Start loading geometry and attributes from MSSQL server with ID
   geometry = L.featureGroup([L.geoJSON(json1), L.geoJSON(json2)]).addTo(map);
   interface();
+
+  jQuery("#attr").html(infoPanel(json1.features[0].properties));
 }
