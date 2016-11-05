@@ -39,3 +39,9 @@
 .table-remove{
   border: none !important;
 }
+
+.table-add{
+  position: relative;
+  left: 40px;
+  top: 0;
+}

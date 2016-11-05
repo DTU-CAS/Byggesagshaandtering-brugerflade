@@ -38,13 +38,6 @@ function init(){
 
   L.control.layers(basemaps, {}, {collapsed: false}).addTo(map);
 
-  // map.on('click', function(e) {
-  //   console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-  // });
-
-  // Placeholder spinner
-  // spin();
-
   // Query the URL for parameters
   var query = QueryString();
   if(query){jQuery("#interface").prepend("<h4>" + "Byggesag: " + query.ID + "</h4>");}
@@ -54,12 +47,14 @@ function init(){
   interface();
 
   jQuery("#attr").html(infoPanel(json1.features[0].properties));
-  jQuery(".table-add").click(function(){
-        jQuery("#objTable > table > tbody").append(addRow("unNames", "editMe", "string"));
+
+  $('.table-add').on('click', function(){
+    $(".table > tbody").append(addRow("unNames", "editMe", "string", "true", "true"));
+    console.log("bob");
   });
-  jQuery(".table-remove").click(function(){
-        jQuery(this).parents('tr');
-        console.log(jQuery(this).parents('tr'));
+
+  $('.table-remove').on('click', function(){
+    $(this).parent().remove();
   });
 
 }
