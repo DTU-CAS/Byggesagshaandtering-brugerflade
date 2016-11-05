@@ -5,6 +5,18 @@
  * Author: NIRAS - Casper Fibæk
  */
 
+ function addRow(key, attribute, addClass){
+   var row =
+     "<tr class='table-row'>" +
+       "<td contenteditable='false'>" + key + "</td>" +
+       "<td contenteditable='true' " + "class='" + addClass + "'>" + attribute + "</td>" +
+       "<td class='table-remove'>" +
+         "<i class='fa fa-times' aria-hidden='true'></i>" +
+       "</td>" +
+     "</tr>";
+   return row;
+ }
+
 function infoPanel(obj){
   var table =
     "<div id='objTable' class='table-editable'>" +
@@ -21,29 +33,17 @@ function infoPanel(obj){
         table += addRow(keys[i], obj[keys[i]], "string");
       }
   }
+
   table +=
         "</table>" +
-        "<i class='fa fa-plus' aria-hidden='true'></i>" +
+        "<i class='fa fa-plus table-add' aria-hidden='true'></i>" +
         "</div>";
-
-  function addRow(key, attribute, addClass){
-    var row =
-      "<tr class='table-row'>" +
-        "<td contenteditable='false'>" + key + "</td>" +
-        "<td contenteditable='true' " + "class='" + addClass + "'>" + attribute + "</td>" +
-        "<td>" +
-          "<i class='fa fa-times' aria-hidden='true'></i>" +
-        "</td>" +
-      "</tr>";
-    return row;
-  }
-
-  jQuery("#objTable > i").click(function(){
-    jQuery("#objTable > table > tbody").append(addRow("unNames", "editMe", "string"));
-  });
 
   return table;
 }
+
+
+
 
 /*
 

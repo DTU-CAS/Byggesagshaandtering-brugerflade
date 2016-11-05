@@ -54,4 +54,12 @@ function init(){
   interface();
 
   jQuery("#attr").html(infoPanel(json1.features[0].properties));
+  jQuery(".table-add").click(function(){
+        jQuery("#objTable > table > tbody").append(addRow("unNames", "editMe", "string"));
+  });
+  jQuery(".table-remove").click(function(){
+        jQuery(this).parents('tr');
+        console.log(jQuery(this).parents('tr'));
+  });
+
 }

@@ -35,3 +35,7 @@
     color: #0b0;
   }
 }
+
+.table-remove{
+  border: none !important;
+}
