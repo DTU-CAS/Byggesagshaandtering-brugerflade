@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>DTU Byggesagsh&aring;ndtering</title>
-  <!-- turfJS: Copyright (c) 2013 Morgan Herlocker -->
-  <!-- leafletJS: Copyright (c) 2010-2016, Vladimir Agafonkin -->
-  <!-- proj4JS: Copyright (c) 2000, Frank Warmerdam -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <link rel="icon" href="images/DTU32.ico">
   <link rel="stylesheet" type="text/css" href="css/information.css">
@@ -14,6 +15,7 @@
   <link rel="stylesheet" type="text/css" href="css/table.css">
 
   <!-- leaflet -->
+  <!-- leafletJS: Copyright (c) 2010-2016, Vladimir Agafonkin -->
   <script src="js/leaflet.js"></script>
   <script src="js/leaflet.pm.min.js"></script>
   <link rel="stylesheet" type="text/css" href="css/leaflet.css">
@@ -22,19 +24,8 @@
   <!-- jQuery -->
   <script src="js/jquery-3.1.1.min.js"></script>
 
-  <!-- Bootstrap -->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="css/bootstrap-flex.min.css">
-  <link rel="stylesheet" type="text/css" href="css/bootstrap-grid.min.css">
-  <link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.min.css">
-  <link rel="stylesheet" type="text/css" href="css/tether.min.css">
-  <link rel="stylesheet" type="text/css" href="css/tether-theme-arrows.min.css">
-  <link rel="stylesheet" type="text/css" href="css/tether-theme-arrows-dark.min.css">
-  <link rel="stylesheet" type="text/css" href="css/tether-theme-basic.min.css">
+  <!-- font awsome -->
   <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-
-  <script src="js/tether.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
 
   <!-- custom -->
   <script src="js/custom/init.js"></script>
@@ -45,16 +36,8 @@
 
 </head>
 <body>
-  <!-- basic bootstrap layout -->
-  <div id="interface">
-    <div id="attr">
-      <div class="table"></div>
-      <div class="edit"></div>
-    </div>
-  </div>
+
   <div id="map"></div>
-
-
 
   <script>
     init();

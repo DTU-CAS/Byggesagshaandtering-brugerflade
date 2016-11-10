@@ -48,13 +48,13 @@ function init(){
 
   jQuery("#attr").html(infoPanel(json1.features[0].properties));
 
-  $('.table-add').on('click', function(){
-    $(".table > tbody").append(addRow("unNames", "editMe", "string", "true", "true"));
-    console.log("bob");
-  });
-
-  $('.table-remove').on('click', function(){
-    $(this).parent().remove();
-  });
+  // $('.table-add').on('click', function(){
+  //   $(".table > tbody").append(addRow("unNames", "editMe", "string", "true", "true"));
+  //   console.log("bob");
+  // });
+  //
+  // $('.table-remove').on('click', function(){
+  //   $(this).parent().remove();
+  // });
 
 }

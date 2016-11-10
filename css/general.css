@@ -6,7 +6,12 @@ html, body{
 	height: 100%;
 	width: 100%;
 	overflow: hidden;
-	margin: 0px !important;
+  margin:0;
+}
+
+.container-fluid{
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 .spinner {
