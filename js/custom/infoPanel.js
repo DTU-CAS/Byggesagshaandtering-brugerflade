@@ -5,6 +5,34 @@
  * Author: NIRAS - Casper Fibæk
  */
 
+ function popUpTable(geoJSON){
+   L.featureGroup(L.geoJSON(geoJSON)
+     .on('click', function(e){
+       var feature = this.getLayers()[0].feature;
+       var latLng = e.latlng;
+
+       L.popup()
+       .setLatLng(latLng)
+       .setContent(infoPanel(feature.properties))
+       .openOn(map);
+
+       $('.table-remove').on('click', function(){
+         $(this).parent().remove();
+       });
+
+       $('.table-add').on('click', function(){
+         $(".table > tbody").append(addRow("unNames", "editMe", "string", "true", "true"));
+
+         $('.table-remove').on('click', function(){
+           $(this).parent().remove();
+         });
+
+       });
+
+     })
+     .addTo(map));
+ }
+
  function addRow(key, attribute, addClass, keyEdit, attrEdit){
    var row =
      "<tr class='table-row'>" +

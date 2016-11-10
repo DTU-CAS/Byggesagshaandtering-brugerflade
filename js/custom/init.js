@@ -38,23 +38,16 @@ function init(){
 
   L.control.layers(basemaps, {}, {collapsed: false}).addTo(map);
 
+  // Start loading geometry and attributes from MSSQL server with ID
+
+  popUpTable(json1);
+
   // Query the URL for parameters
   var query = QueryString();
   if(query){jQuery("#interface").prepend("<h4>" + "Byggesag: " + query.ID + "</h4>");}
 
-  // Start loading geometry and attributes from MSSQL server with ID
-  geometry = L.featureGroup([L.geoJSON(json1), L.geoJSON(json2)]).addTo(map);
-  interface();
+  // interface();
 
-  jQuery("#attr").html(infoPanel(json1.features[0].properties));
 
-  // $('.table-add').on('click', function(){
-  //   $(".table > tbody").append(addRow("unNames", "editMe", "string", "true", "true"));
-  //   console.log("bob");
-  // });
-  //
-  // $('.table-remove').on('click', function(){
-  //   $(this).parent().remove();
-  // });
 
 }
