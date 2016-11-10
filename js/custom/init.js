@@ -46,8 +46,30 @@ function init(){
   var query = QueryString();
   if(query){jQuery("#interface").prepend("<h4>" + "Byggesag: " + query.ID + "</h4>");}
 
-  // interface();
+    // define toolbar options
+  var options = {
+      position: 'topleft', // toolbar position, options are 'topleft', 'topright', 'bottomleft', 'bottomright'
+      drawMarker: true,  // adds button to draw markers
+      drawPolygon: true,  // adds button to draw a polygon
+      drawPolyline: true,  // adds button to draw a polyline
+      editPolygon: true,  // adds button to toggle global edit mode
+      deleteLayer: true   // adds a button to delete layers
+  };
 
+  // Marker is special Casper
+
+  // add leaflet.pm controls to the map
+  map.pm.addControls(options);
+  map.on('pm:create', function(e) {
+    console.log(e.layer);
+    e.layer.properties = {
+      "car": "toyota",
+      "cycle": false
+    };
+
+
+
+    console.log(e.layer);});
 
 
 }

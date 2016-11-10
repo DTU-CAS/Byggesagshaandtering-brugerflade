@@ -23,6 +23,21 @@ html, body{
   border-radius: 0 !important ;
 }
 
+.leaflet-popup-content-wrapper{
+  border-radius: 0 !important;
+}
+
+#options{
+  position: relative;
+  display: block;
+  width: 800px;
+  height: 60px;
+  z-index: 1000;
+  margin: 0 auto;
+  margin-top: 20px;
+  background: #333;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+}
 
 .spinner {
   position: absolute;
