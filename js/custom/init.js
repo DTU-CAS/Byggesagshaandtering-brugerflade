@@ -43,29 +43,14 @@ function init(){
   popUpTable(json1);
 
   // Query the URL for parameters
-  var query = QueryString();
-  if(query){jQuery("#interface").prepend("<h4>" + "Byggesag: " + query.ID + "</h4>");}
+  // var query = QueryString();
+  // if(query){jQuery("#interface").prepend("<h4>" + "Byggesag: " + query.ID + "</h4>");}
 
-    // define toolbar options
-  var options = {
-      position: 'topleft', // toolbar position, options are 'topleft', 'topright', 'bottomleft', 'bottomright'
-      drawMarker: true,  // adds button to draw markers
-      drawPolygon: true,  // adds button to draw a polygon
-      drawPolyline: true,  // adds button to draw a polyline
-      editPolygon: true,  // adds button to toggle global edit mode
-      deleteLayer: true   // adds a button to delete layers
-  };
-
-  // Marker is special Casper
-
-  // add leaflet.pm controls to the map
-  map.pm.addControls(options);
   map.on('pm:create', function(e) {
     var feature = e.layer;
-    bob = feature;
+    feature.setStyle({color: "#21bde7"});
     e.layer.properties = {
-      "car": "toyota",
-      "cycle": false
+      "editMe": true
     };
 
     feature.on('click', function(e){
@@ -97,6 +82,5 @@ function init(){
      feature.setStyle({color: "#21bde7"});
     });
 
-    console.log(e.layer);});
-
+  });
 }

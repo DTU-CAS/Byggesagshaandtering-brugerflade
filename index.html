@@ -9,7 +9,6 @@
 
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <link rel="icon" href="images/DTU32.ico">
-  <link rel="stylesheet" type="text/css" href="css/information.css">
   <link rel="stylesheet" type="text/css" href="css/general.css">
   <link rel="stylesheet" type="text/css" href="css/table.css">
 
@@ -35,9 +34,23 @@
 
 </head>
 <body>
+  <div id="interface">
+    <div id="input">
+      <a class="logo" href="index.html">
+        <img border="0" alt="Denmark's Technical University" src="images/DTU_logo_white.png">
+      </a>
+      <hr />
 
-  <div id="map">
-    <!-- <div id="options"></div> -->
+      <div id="editButtons">
+        <div id="edit" class="unselectable disabled"><p>Edit</p></div>
+        <div id="polygons" class="unselectable"><p>Create polygon</p></div>
+        <div id="license" class="unselectable"><p>Create lines</p></div>
+        <div id="point" class="unselectable"><p>Create point</p></div>
+        <div id="delete" class="unselectable"><p>Delete geometry</p></div>
+      </div>
+
+    </div>
+    <div id="map"></div>
   </div>
 
   <script>

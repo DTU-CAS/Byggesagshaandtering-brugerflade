@@ -22,11 +22,11 @@ function QueryString() {
   return query_string;
 }
 
-// placeholder loader
-function spin(){
-  jQuery("body").append("<div class='spinner'></div>");
-  setTimeout(endLoad, 3000);
-  function endLoad(){
-    jQuery(".spinner").remove();
-  }
-}
+// // placeholder loader
+// function spin(){
+//   jQuery("body").append("<div class='spinner'></div>");
+//   setTimeout(endLoad, 3000);
+//   function endLoad(){
+//     jQuery(".spinner").remove();
+//   }
+// }

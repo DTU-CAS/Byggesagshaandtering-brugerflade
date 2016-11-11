@@ -9,12 +9,26 @@ html, body{
   margin:0;
 }
 
-#map{
-  width: 100%;
-  height: 100%;
-  margin:0;
-  padding:0;
+#interface{
+height:100%;
+  overflow:hidden;
 }
+
+#input{
+  width: 260px;
+  text-align: center;
+  float:left;
+  min-height:100%;
+  background:#333;
+  color: #fff;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  z-index: 1000;
+}
+
+#map {
+  position: relative;
+  min-height:100%;
+ }
 
 /* We're using !important to overwrite basic leaflet styles here */
 .leaflet-control-layers{
@@ -27,47 +41,51 @@ html, body{
   border-radius: 0 !important;
 }
 
-#options{
+.leaflet-popup-content-wrapper, .leaflet-popup-tip{
+  background: #333 !important;
+  color: #fff !important;
+}
+
+.logo > img{
   position: relative;
-  display: block;
-  width: 800px;
-  height: 60px;
-  z-index: 1000;
-  margin: 0 auto;
-  margin-top: 20px;
-  background: #333;
+  width: 220px;
+  text-align: center;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+hr{
   box-shadow: 0 1px 5px rgba(0,0,0,0.4);
 }
 
-.spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 1001;
-  width: 100px;
-  height: 100px;
-  background-color: #fff;
-
-  border-radius: 100%;
-  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
-  animation: sk-scaleout 1.0s infinite ease-in-out;
+#editButtons{
+  margin-left: 40px;
+  margin-top: 30px;
+  width: 160px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
 }
 
-@-webkit-keyframes sk-scaleout {
-  0% { -webkit-transform: scale(0) }
-  100% {
-    -webkit-transform: scale(1.0);
-    opacity: 0;
-  }
+#editButtons > div {
+  background: #444;
+  margin-top: 2px;
+  width: 160px;
+  padding: 2px;
 }
 
-@keyframes sk-scaleout {
-  0% {
-    -webkit-transform: scale(0);
-    transform: scale(0);
-  } 100% {
-    -webkit-transform: scale(1.0);
-    transform: scale(1.0);
-    opacity: 0;
-  }
+#editButtons > div > p {
+  font-size: smaller;
+}
+
+#editButtons > div:hover {
+  background: #555;
+  cursor: pointer;
+}
+
+.unselectable {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
