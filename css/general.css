@@ -89,3 +89,7 @@ hr{
   -ms-user-select: none;
   user-select: none;
 }
+
+.idTag{
+  margin-top: 30px;
+}

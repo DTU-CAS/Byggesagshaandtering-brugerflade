@@ -43,8 +43,8 @@ function init(){
   popUpTable(json1);
 
   // Query the URL for parameters
-  // var query = QueryString();
-  // if(query){jQuery("#interface").prepend("<h4>" + "Byggesag: " + query.ID + "</h4>");}
+  var query = QueryString();
+  if(query){jQuery("#input").append("<p class='idTag'>" + "Byggesag: " + query.ID + "</p>");}
 
   map.on('pm:create', function(e) {
     var feature = e.layer;
