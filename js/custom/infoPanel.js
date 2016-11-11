@@ -1,17 +1,16 @@
 /*
  * This script takes an object and creates a bootstrap editable table
- * Requires: Bootstrap & font-awesome
- * Based upon: Codepen user - Ash Blue
  * Author: NIRAS - Casper Fibæk
  */
 
  function popUpTable(geoJSON){
    L.featureGroup(L.geoJSON(geoJSON, {"style": {"color": "#21bde7"}})
      .on('click', function(e){
+       var layer = this.getLayers()[0];
        var feature = this.getLayers()[0].feature;
        var latLng = e.latlng;
 
-       L.popup()
+       L.popup({closeButton: false})
        .setLatLng(latLng)
        .setContent(infoPanel(feature.properties))
        .openOn(map);
@@ -20,13 +19,37 @@
          $(this).parent().remove();
        });
 
-       $('.table-add').on('click', function(){
+       $('#addCollumn').on('click', function(){
          $(".table > tbody").append(addRow("unNames", "editMe", "string", "true", "true"));
 
-         $('.table-remove').on('click', function(){
-           $(this).parent().remove();
+         $('.table-remove > i').on('click', function(){
+           $(this).parent().parent().remove();
          });
 
+         $(this).fadeTo(100, 0.5).fadeTo(150, 1.0);
+       });
+
+      if(layer.pm.enabled() === true){
+        $("#editGeom").removeClass("disabled-edit").addClass("enabled-edit");
+        $("#editGeom").first().text("Save edits");
+      }
+
+       $("#editGeom").click(function(e){
+         if($(this).hasClass("disabled-edit")){
+           layer.pm.enable(options);
+           $(this).removeClass("disabled-edit").addClass("enabled-edit");
+           $(this).first().text("Save edits");
+           map.closePopup();
+         } else {
+           layer.pm.disable();
+           $(this).removeClass("enabled-edit").addClass("disabled-edit");
+           $(this).first().text("Edit Geometry");
+         }
+       });
+
+       $("#deleteGeom").click(function(){
+         map.removeLayer(layer);
+         map.closePopup();
        });
 
      })
@@ -72,69 +95,12 @@ function infoPanel(obj){
 
   table +=
         "</table>" +
-        "<i class='fa fa-plus table-add' aria-hidden='true'></i>" +
+        "<div id='addCollumn' class='unselectable-text'><p>Add<i class='fa fa-plus table-add' aria-hidden='true'></i></p></div>" +
+        "<div id='popup-button-wrap'>" +
+          "<div id='editGeom' class='disabled-edit unselectable-text'><p>Edit<i class='fa fa-pencil table-edit' aria-hidden='true'></i></p></div>" +
+          "<div id='deleteGeom' class='disabled-edit unselectable-text'><p>Delete<i class='fa fa-trash table-delete' aria-hidden='true'></i></p></div>" +
+        "</div>" +
         "</div>";
 
   return table;
 }
-
-
-
-
-/*
-
-var $TABLE = $('#table');
-var $BTN = $('#export-btn');
-var $EXPORT = $('#export');
-
-$('.table-add').click(function () {
-  var $clone = $TABLE.find('tr.hide').clone(true).removeClass('hide table-line');
-  $TABLE.find('table').append($clone);
-});
-
-$('.table-remove').click(function () {
-  $(this).parents('tr').detach();
-});
-
-$('.table-up').click(function () {
-  var $row = $(this).parents('tr');
-  if ($row.index() === 1) return; // Don't go above the header
-  $row.prev().before($row.get(0));
-});
-
-$('.table-down').click(function () {
-  var $row = $(this).parents('tr');
-  $row.next().after($row.get(0));
-});
-
-// A few jQuery helpers for exporting only
-jQuery.fn.pop = [].pop;
-jQuery.fn.shift = [].shift;
-
-$BTN.click(function () {
-  var $rows = $TABLE.find('tr:not(:hidden)');
-  var headers = [];
-  var data = [];
-
-  // Get the headers (add special header logic here)
-  $($rows.shift()).find('th:not(:empty)').each(function () {
-    headers.push($(this).text().toLowerCase());
-  });
-
-  // Turn all existing rows into a loopable array
-  $rows.each(function () {
-    var $td = $(this).find('td');
-    var h = {};
-
-    // Use the headers from earlier to name our hash keys
-    headers.forEach(function (header, i) {
-      h[header] = $td.eq(i).text();
-    });
-
-    data.push(h);
-  });
-
-  // Output the result
-  $EXPORT.text(JSON.stringify(data));
-});
-*/

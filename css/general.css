@@ -46,6 +46,10 @@ height:100%;
   color: #fff !important;
 }
 
+.leaflet-popup-close-button{
+  display: none;
+}
+
 .logo > img{
   position: relative;
   width: 220px;
@@ -79,17 +83,104 @@ hr{
 }
 
 #editButtons > div:hover {
+  transition: all .25s ease-in-out;
+  -moz-transition: all .25s ease-in-out;
+  -webkit-transition: all .25s;
   background: #555;
   cursor: pointer;
 }
 
-.unselectable {
+.unselectable-text {
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
 
+.selected{
+  background: #555 !important;
+}
+
+.unselectable{
+  pointer-events: none !important;
+  opacity: 0.60;
+  cursor: not-allowed !important;
+}
+
 .idTag{
   margin-top: 30px;
+}
+
+.leaflet-popup{
+  min-width: 284px;
+}
+
+#editGeom{
+  margin-top: 10px;
+  margin-bottom: 4px;
+  background: #444;
+  padding: 6px;
+  width: 100px;
+  height: 18px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+  cursor: pointer;
+}
+
+#editGeom > p {
+  margin: 0;
+}
+
+#editGeom:hover{
+  transition: all .25s ease-in-out;
+  -moz-transition: all .25s ease-in-out;
+  -webkit-transition: all .25s;
+  background: #555;
+}
+
+#deleteGeom{
+  margin-top: -34px;
+  margin-left: 134px;
+  margin-bottom: 4px;
+  background: #444;
+  padding: 6px;
+  width: 100px;
+  height: 18px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+  cursor: pointer;
+}
+
+#deleteGeom > p {
+  margin: 0;
+}
+
+#deleteGeom:hover{
+  transition: all .25s ease-in-out;
+  -moz-transition: all .25s ease-in-out;
+  -webkit-transition: all .25s;
+  background: #555;
+}
+
+#addCollumn{
+  margin-top: 10px;
+  margin-bottom: 4px;
+  background: #444;
+  padding: 6px;
+  width: 100px;
+  height: 18px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+  cursor: pointer;
+}
+
+#addCollumn > p {
+  margin: 0;
+}
+
+#addCollumn:hover{
+  transition: all .25s ease-in-out;
+  -moz-transition: all .25s ease-in-out;
+  -webkit-transition: all .25s;
+  background: #555;
 }

@@ -38,49 +38,27 @@ function init(){
 
   L.control.layers(basemaps, {}, {collapsed: false}).addTo(map);
 
-  // Start loading geometry and attributes from MSSQL server with ID
+  // editing options
+   options = {
+     draggable: true,
+     snappable: true,
+     snapDistance: 30,
+     templineStyle: {
+         color: 'red',
+     },
+     hintlineStyle: {
+         color: 'red',
+         dashArray: [5, 5],
+     },
+   };
 
+  // Start loading geometry and attributes from MSSQL server with ID
   popUpTable(json1);
 
   // Query the URL for parameters
-  var query = QueryString();
+  query = QueryString();
   if(query){jQuery("#input").append("<p class='idTag'>" + "Byggesag: " + query.ID + "</p>");}
 
-  map.on('pm:create', function(e) {
-    var feature = e.layer;
-    feature.setStyle({color: "#21bde7"});
-    e.layer.properties = {
-      "editMe": true
-    };
 
-    feature.on('click', function(e){
-      var latLng = e.latlng;
-
-      L.popup()
-      .setLatLng(latLng)
-      .setContent(infoPanel(feature.properties))
-      .openOn(map);
-
-      $('.table-remove').on('click', function(){
-        $(this).parent().remove();
-      });
-
-      $('.table-add').on('click', function(){
-        $(".table > tbody").append(addRow("unNames", "editMe", "string", "true", "true"));
-
-        $('.table-remove').on('click', function(){
-          $(this).parent().remove();
-        });
-
-      });
-    })
-
-    .on('mouseover', function(e){
-     feature.setStyle({color: "#28edca"});
-    })
-    .on('mouseout', function(e){
-     feature.setStyle({color: "#21bde7"});
-    });
-
-  });
+  interface();
 }

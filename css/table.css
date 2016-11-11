@@ -1,50 +1,22 @@
-.table-editable {
-  position: relative;
 
-  .glyphicon {
-    font-size: 20px;
-  }
+.table-add, .table-delete, .table-edit{
+  margin-left: 6px;
+  color: #fff;
+  text-align: center;
 }
 
-.table-remove {
-  color: #700;
+.table-remove > i:hover{
+  font-size: larger;
+  color: red;
   cursor: pointer;
-
-  &:hover {
-    color: #f00;
-  }
-}
-
-.table-up, .table-down {
-  color: #007;
-  cursor: pointer;
-
-  &:hover {
-    color: #00f;
-  }
-}
-
-.table-add {
-  color: #070;
-  cursor: pointer;
-  position: absolute;
-  top: 8px;
-  right: 0;
-
-  &:hover {
-    color: #0b0;
-  }
+  margin-left: -1px;
 }
 
 .table-remove{
-  border: none !important;
+  min-width: 0 !important;
+  width: 30px;
 }
 
-.table-add{
-  position: relative;
-  left: 40px;
-  top: 0;
-}
 
 #attr{
   position: absolute;
@@ -73,15 +45,18 @@ td{
   max-width: 200px !important;
 }
 
-.table-remove{
-  min-width: 10px;
-  width: 10px;
-}
-
 .boolean{
   color: rgb(236, 215, 52);
 }
 
 .number{
   color: rgb(27, 171, 224);
+}
+
+.string{
+  color: rgb(209, 28, 17);
+}
+
+.boolean, .number, .string{
+  min-width: 100px;
 }
