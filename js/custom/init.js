@@ -61,15 +61,42 @@ function init(){
   // add leaflet.pm controls to the map
   map.pm.addControls(options);
   map.on('pm:create', function(e) {
-    console.log(e.layer);
+    var feature = e.layer;
+    bob = feature;
     e.layer.properties = {
       "car": "toyota",
       "cycle": false
     };
 
+    feature.on('click', function(e){
+      var latLng = e.latlng;
 
+      L.popup()
+      .setLatLng(latLng)
+      .setContent(infoPanel(feature.properties))
+      .openOn(map);
+
+      $('.table-remove').on('click', function(){
+        $(this).parent().remove();
+      });
+
+      $('.table-add').on('click', function(){
+        $(".table > tbody").append(addRow("unNames", "editMe", "string", "true", "true"));
+
+        $('.table-remove').on('click', function(){
+          $(this).parent().remove();
+        });
+
+      });
+    })
+
+    .on('mouseover', function(e){
+     feature.setStyle({color: "#28edca"});
+    })
+    .on('mouseout', function(e){
+     feature.setStyle({color: "#21bde7"});
+    });
 
     console.log(e.layer);});
-
 
 }

@@ -6,7 +6,7 @@
  */
 
  function popUpTable(geoJSON){
-   L.featureGroup(L.geoJSON(geoJSON)
+   L.featureGroup(L.geoJSON(geoJSON, {"style": {"color": "#21bde7"}})
      .on('click', function(e){
        var feature = this.getLayers()[0].feature;
        var latLng = e.latlng;
@@ -29,6 +29,14 @@
 
        });
 
+     })
+     .on('mouseover', function(e){
+       var feature = this.getLayers()[0];
+       feature.setStyle({color: "#28edca"});
+     })
+     .on('mouseout', function(e){
+       var feature = this.getLayers()[0];
+       feature.setStyle({color: "#21bde7"});
      })
      .addTo(map));
  }
