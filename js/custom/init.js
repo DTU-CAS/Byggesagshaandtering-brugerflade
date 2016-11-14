@@ -80,7 +80,7 @@ function init(){
     $.ajax({url: wfsParam, success: function(result){
         console.log("done...");
         bob = result;
-        console.log(GML2GeoJSON(result));
+        console.log(GML2GeoJSON(result, true));
     }});
 
   // editing options
