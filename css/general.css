@@ -19,7 +19,7 @@ height:100%;
   text-align: center;
   float:left;
   min-height:100%;
-  background:#333;
+  background:#252830;
   color: #fff;
   box-shadow: 0 1px 5px rgba(0,0,0,0.4);
   z-index: 1000;
@@ -30,25 +30,6 @@ height:100%;
   min-height:100%;
  }
 
-/* We're using !important to overwrite basic leaflet styles here */
-.leaflet-control-layers{
-  background: #333 !important;
-  color: #fff !important;
-  border-radius: 0 !important ;
-}
-
-.leaflet-popup-content-wrapper{
-  border-radius: 0 !important;
-}
-
-.leaflet-popup-content-wrapper, .leaflet-popup-tip{
-  background: #333 !important;
-  color: #fff !important;
-}
-
-.leaflet-popup-close-button{
-  display: none;
-}
 
 .logo > img{
   position: relative;
@@ -60,10 +41,6 @@ height:100%;
   margin-bottom: 10px;
 }
 
-hr{
-  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-}
-
 #editButtons{
   margin-left: 40px;
   margin-top: 30px;
@@ -72,7 +49,7 @@ hr{
 }
 
 #editButtons > div {
-  background: #444;
+  background: #434857;
   margin-top: 2px;
   width: 160px;
   padding: 2px;
@@ -82,12 +59,54 @@ hr{
   font-size: smaller;
 }
 
-#editButtons > div:hover {
-  transition: all .25s ease-in-out;
-  -moz-transition: all .25s ease-in-out;
-  -webkit-transition: all .25s;
-  background: #555;
+#editButtons > div:hover,
+#editGeom:hover,
+#deleteGeom:hover,
+#addCollumn:hover{
+  transition: all .15s ease-in-out;
+  -moz-transition: all .15s ease-in-out;
+  -webkit-transition: all .15s;
+  background: #1ca8dd;
   cursor: pointer;
+}
+
+#editGeom,
+#deleteGeom,
+#addCollumn{
+  background: #434857;
+  padding: 6px;
+  width: 100px;
+  height: 18px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+  cursor: pointer;
+}
+
+#editGeom{
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+
+#deleteGeom{
+  margin-top: -34px;
+  margin-left: 134px;
+  margin-bottom: 4px;
+}
+
+#addCollumn{
+  margin-top: 10px;
+  margin-bottom: 4px;
+  background: #434857;
+}
+
+#deleteGeom > p,
+#addCollumn > p,
+#editGeom > p{
+  margin: 0;
+}
+
+#input > p{
+  color: #888;
 }
 
 .unselectable-text {
@@ -98,7 +117,7 @@ hr{
 }
 
 .selected{
-  background: #555 !important;
+  background: #1ca8dd !important;
 }
 
 .unselectable{
@@ -113,74 +132,4 @@ hr{
 
 .leaflet-popup{
   min-width: 284px;
-}
-
-#editGeom{
-  margin-top: 10px;
-  margin-bottom: 4px;
-  background: #444;
-  padding: 6px;
-  width: 100px;
-  height: 18px;
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
-  cursor: pointer;
-}
-
-#editGeom > p {
-  margin: 0;
-}
-
-#editGeom:hover{
-  transition: all .25s ease-in-out;
-  -moz-transition: all .25s ease-in-out;
-  -webkit-transition: all .25s;
-  background: #555;
-}
-
-#deleteGeom{
-  margin-top: -34px;
-  margin-left: 134px;
-  margin-bottom: 4px;
-  background: #444;
-  padding: 6px;
-  width: 100px;
-  height: 18px;
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
-  cursor: pointer;
-}
-
-#deleteGeom > p {
-  margin: 0;
-}
-
-#deleteGeom:hover{
-  transition: all .25s ease-in-out;
-  -moz-transition: all .25s ease-in-out;
-  -webkit-transition: all .25s;
-  background: #555;
-}
-
-#addCollumn{
-  margin-top: 10px;
-  margin-bottom: 4px;
-  background: #444;
-  padding: 6px;
-  width: 100px;
-  height: 18px;
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
-  cursor: pointer;
-}
-
-#addCollumn > p {
-  margin: 0;
-}
-
-#addCollumn:hover{
-  transition: all .25s ease-in-out;
-  -moz-transition: all .25s ease-in-out;
-  -webkit-transition: all .25s;
-  background: #555;
 }

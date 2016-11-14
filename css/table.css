@@ -1,22 +1,15 @@
-
-.table-add, .table-delete, .table-edit{
-  margin-left: 6px;
-  color: #fff;
-  text-align: center;
+td{
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  min-width: 70px;
 }
 
-.table-remove > i:hover{
-  font-size: larger;
-  color: red;
-  cursor: pointer;
-  margin-left: -1px;
+#objTable{
+  margin-top: 20px;
+  max-width: 200px !important;
 }
-
-.table-remove{
-  min-width: 0 !important;
-  width: 30px;
-}
-
 
 #attr{
   position: absolute;
@@ -32,31 +25,41 @@
   border-top: 1px solid black;
 }
 
-td{
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  min-width: 70px;
+.table-add, .table-delete, .table-edit{
+  margin-left: 6px;
+  color: #fff;
+  text-align: center;
 }
 
-#objTable{
-  margin-top: 20px;
-  max-width: 200px !important;
+.table-remove{
+  min-width: 0 !important;
+  width: 30px;
 }
 
-.boolean{
-  color: rgb(236, 215, 52);
-}
-
-.number{
-  color: rgb(27, 171, 224);
-}
-
-.string{
-  color: rgb(209, 28, 17);
+.table-remove > i:hover{
+  font-size: larger;
+  color: #e64759;
+  cursor: pointer;
+  margin-left: -1px;
 }
 
 .boolean, .number, .string{
   min-width: 100px;
+}
+
+.boolean{
+  color: #1bc98e;
+}
+
+.number{
+  color: #1ca8dd;
+}
+
+.string{
+  color: #e64759;
+}
+
+.rowName{
+  color: #999;
+  font-weight: bold;
 }

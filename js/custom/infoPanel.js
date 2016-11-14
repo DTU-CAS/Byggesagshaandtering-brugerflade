@@ -4,7 +4,7 @@
  */
 
  function popUpTable(geoJSON){
-   L.featureGroup(L.geoJSON(geoJSON, {"style": {"color": "#21bde7"}})
+   L.featureGroup(L.geoJSON(geoJSON, {"style": {"color": "#1ca8dd"}})
      .on('click', function(e){
        var layer = this.getLayers()[0];
        var feature = this.getLayers()[0].feature;
@@ -59,7 +59,7 @@
      })
      .on('mouseout', function(e){
        var feature = this.getLayers()[0];
-       feature.setStyle({color: "#21bde7"});
+       feature.setStyle({color: "#1ca8dd"});
      })
      .addTo(map));
  }
@@ -67,7 +67,7 @@
  function addRow(key, attribute, addClass, keyEdit, attrEdit){
    var row =
      "<tr class='table-row'>" +
-       "<td contenteditable='" + keyEdit + "'>" + key + "</td>" +
+       "<td class='rowName' contenteditable='" + keyEdit + "'>" + key + "</td>" +
        "<td contenteditable='" + attrEdit + "' " + "class='" + addClass + "'>" + attribute + "</td>" +
        "<td class='table-remove'>" +
          "<i class='fa fa-times' aria-hidden='true'></i>" +

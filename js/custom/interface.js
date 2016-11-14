@@ -2,7 +2,7 @@ function interface(){
   map.on('pm:create', function(e) {
     var feature = e.layer;
 
-    feature.setStyle({color: "#21bde7"});
+    feature.setStyle({color: "#1ca8dd"});
     e.layer.properties = {
       "editMe": true
     };
@@ -33,7 +33,7 @@ function interface(){
      feature.setStyle({color: "#28edca"});
     })
     .on('mouseout', function(e){
-     feature.setStyle({color: "#21bde7"});
+     feature.setStyle({color: "#1ca8dd"});
     });
 
     map.pm.disableDraw('Poly');
