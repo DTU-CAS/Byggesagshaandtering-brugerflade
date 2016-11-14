@@ -17,7 +17,6 @@ function init(){
     version: '1.1.1',
     layers: 'orto_foraar',
     format: 'image/png',
-    continuousWorld : true,
     maxZoom: 21,
     maxNativeZoom: 18,
     attribution: '&copy; <a href="http://gst.dk">GeoDanmark</a>'
@@ -36,7 +35,52 @@ function init(){
     "OSM": OSMbasemap
   };
 
-  L.control.layers(basemaps, {}, {collapsed: false}).addTo(map);
+  var overlayMaps = {
+    // ...
+  };
+
+  var mainControl = L.control.layers(basemaps, overlayMaps, {collapsed: false}).addTo(map);
+
+  // var layers2add = [
+  //   ['6832 ', 'Byggepladser'],
+  //   ['6834 ', 'Parkering'],
+  //   ['6831 ', 'Adgangsveje'],
+  //   ['6833 ', 'Ombyg og Renovering'],
+  //   ['7418', 'Nybyg'],
+  //   ['18454', 'Streetfood'],
+  // ];
+  //
+  // for(var i = 0; i < layers2add.length; i++){
+    // var baseParam = L.tileLayer.wms("http://services.nirasmap.niras.dk/kortinfo/services/Wms.ashx?", {
+    //   site: 'Provider',
+    //   page: 'DTU',
+    //   UserName: 'DTUView',
+    //   Password: 'Bruger12',
+    //   version: '1.1.1',
+    //   layers: layers2add[i][0],
+    //   format: 'image/png',
+    //   maxZoom: 21,
+    //   maxNativeZoom: 18,
+    //   attribution: '&copy; <a href="http://DTU.dk">Danish Technical University</a>'
+    // }).addTo(map);
+  //
+  //   mainControl.addOverlay(baseParam, layers2add[i][1]);
+  // }
+
+  var baseParam = "http://services.nirasmap.niras.dk/kortinfo/services/Wfs.ashx?";
+      baseParam += "Site=Provider&";
+      baseParam += "Page=DTU&";
+      baseParam += "UserName=DTUView&";
+      baseParam += "Password=Bruger12&";
+      baseParam += "SERVICE=WFS&";
+      baseParam += "REQUEST=GetFeature&";
+      baseParam += "TYPENAME=ugis:T6832&";
+      baseParam += "SRSNAME=EPSG:3857&";
+
+    $.ajax({url: baseParam, success: function(result){
+        console.log("done...");
+        bob = result;
+    }});
 
   // editing options
    options = {
