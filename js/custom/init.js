@@ -41,7 +41,7 @@ function init(){
 
   var mainControl = L.control.layers(basemaps, overlayMaps, {collapsed: false}).addTo(map);
 
-  var layers2add = [
+  var layers2add_WMS = [
     ['6832 ', 'Byggepladser'],
     ['6834 ', 'Parkering'],
     ['6831 ', 'Adgangsveje'],
@@ -50,37 +50,51 @@ function init(){
     ['18454', 'Streetfood'],
   ];
 
-  for(var i = 0; i < layers2add.length; i++){
+  for(var i = 0; i < layers2add_WMS.length; i++){
     var baseParam = L.tileLayer.wms("http://services.nirasmap.niras.dk/kortinfo/services/Wms.ashx?", {
       site: 'Provider',
       page: 'DTU',
       UserName: 'DTUView',
       Password: 'Bruger12',
       version: '1.1.1',
-      layers: layers2add[i][0],
+      layers: layers2add_WMS[i][0],
       format: 'image/png',
       maxZoom: 21,
       maxNativeZoom: 18,
       attribution: '&copy; <a href="http://DTU.dk">Danish Technical University</a>'
     });
 
-    mainControl.addOverlay(baseParam, layers2add[i][1]);
+    mainControl.addOverlay(baseParam, layers2add_WMS[i][1]);
   }
 
-  var wfsParam = "http://services.nirasmap.niras.dk/kortinfo/services/Wfs.ashx?";
-      wfsParam += "Site=Provider&";
-      wfsParam += "Page=DTU&";
-      wfsParam += "UserName=DTUView&";
-      wfsParam += "Password=Bruger12&";
-      wfsParam += "SERVICE=WFS&";
-      wfsParam += "REQUEST=GetFeature&";
-      wfsParam += "TYPENAME=ugis:T6832&";
-      wfsParam += "SRSNAME=EPSG:3857";
-  //
-    $.ajax({url: wfsParam, success: function(result){
-        geo = GML2GeoJSON(result, true);
-        popUpTable(geo);
+  var layers2add_WFS = [
+    ['ugis:T6832', 'Byggepladser'],
+    ['ugis:T6834', 'Parkering'],
+    ['ugis:T6831', 'Adgangsveje'],
+    ['ugis:T6833', 'Ombyg og Renovering'],
+    ['ugis:T7418', 'Nybyg'],
+    ['ugis:T18454', 'Streetfood'],
+  ];
+
+  // for(var j = 0; j < layers2add_WFS.length; j++){
+    wfsBase = "http://services.nirasmap.niras.dk/kortinfo/services/Wfs.ashx?";
+    wfsParams = {
+      Site: 'Provider',
+      Page: 'DTU',
+      UserName: 'DTUView',
+      Password: 'Bruger12',
+      Service: 'WFS',
+      Request: 'GetFeature',
+      Typename: 'ugis:T6834',
+      Srsname: 'EPSG:3857',
+    };
+    wfsRequest = wfsBase + L.Util.getParamString(wfsParams, wfsBase, true);
+
+    $.ajax({url: wfsRequest, success: function(result){
+      popUpTable(GML2GeoJSON(result, true));
     }});
+  // }
+
 
   // editing options
    options = {

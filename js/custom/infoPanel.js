@@ -6,13 +6,9 @@
  function popUpTable(geoJSON){
    L.featureGroup(L.geoJSON(geoJSON, {"style": {"color": "#1ca8dd"}})
      .on('click', function(e){
-      //  console.log(this);
-       console.log(e.layer._leaflet_id);
-       console.log(this.getLayer(e.layer._leaflet_id));
 
-       var layer = this.getLayers()[0];
-
-       var feature = this.getLayers()[0].feature;
+       var layer = this.getLayer(e.layer._leaflet_id);
+       var feature = layer.feature;
        var latLng = e.latlng;
 
        L.popup({closeButton: false})
@@ -59,11 +55,11 @@
 
      })
      .on('mouseover', function(e){
-       var feature = this.getLayers()[0];
+       var feature = this.getLayer(e.layer._leaflet_id);
        feature.setStyle({color: "#28edca"});
      })
      .on('mouseout', function(e){
-       var feature = this.getLayers()[0];
+       var feature = this.getLayer(e.layer._leaflet_id);
        feature.setStyle({color: "#1ca8dd"});
      })
      .addTo(map));
