@@ -1,5 +1,4 @@
 // Initialize the interface
-
 function init(){
   // create the map
   map = L.map('map', {
@@ -41,12 +40,14 @@ function init(){
 
   var mainControl = L.control.layers(basemaps, overlayMaps, {collapsed: false}).addTo(map);
 
+// WMS
   var layers2add_WMS = [
     ['6832 ', 'Byggepladser'],
     ['6834 ', 'Parkering'],
     ['6831 ', 'Adgangsveje'],
     ['6833 ', 'Ombyg og Renovering'],
     ['7418', 'Nybyg'],
+    ['7428', 'Byggeri'],
     ['18454', 'Streetfood'],
   ];
 
@@ -76,25 +77,49 @@ function init(){
     ['ugis:T18454', 'Streetfood'],
   ];
 
-  // for(var j = 0; j < layers2add_WFS.length; j++){
-    wfsBase = "http://services.nirasmap.niras.dk/kortinfo/services/Wfs.ashx?";
-    wfsParams = {
+  function addWfsLayer(string){
+    var wfsBase = "http://services.nirasmap.niras.dk/kortinfo/services/Wfs.ashx?";
+    var wfsParams = {
       Site: 'Provider',
       Page: 'DTU',
       UserName: 'DTUView',
       Password: 'Bruger12',
       Service: 'WFS',
       Request: 'GetFeature',
-      Typename: 'ugis:T6834',
+      Typename: string,
       Srsname: 'EPSG:3857',
     };
-    wfsRequest = wfsBase + L.Util.getParamString(wfsParams, wfsBase, true);
+
+    var wfsParams_edit = {
+      Site: 'Provider',
+      Page: 'DTU',
+      UserName: 'DTUedit',
+      Password: 'Rette37g',
+      Service: 'WFS',
+      Request: 'GetFeature',
+      Typename: string,
+      Srsname: 'EPSG:3857',
+    };
+     wfsRequest = wfsBase + L.Util.getParamString(wfsParams_edit, wfsBase, true);
 
     $.ajax({url: wfsRequest, success: function(result){
-      popUpTable(GML2GeoJSON(result, true));
+      gml = result;
+      geo = GML2GeoJSON(result, true);
+      geo = popUpTable(GML2GeoJSON(result, true));
     }});
-  // }
-
+  }
+  // byggepladser
+  // addWfsLayer("ugis:T6832");
+  // Parkering
+  // addWfsLayer("ugis:T6834");
+  // Adgangsveje
+  // addWfsLayer("ugis:T6831"); // LineStrings
+  // Ombyg og Renovering
+  addWfsLayer("ugis:T6833");
+  // Nybyg
+  // addWfsLayer("ugis:T7418");
+  // StreetFood
+  // addWfsLayer("ugis:T18454");
 
   // editing options
    options = {

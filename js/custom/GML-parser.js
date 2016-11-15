@@ -8,31 +8,56 @@ function GML2GeoJSON(gml, convert){
     var WGS84Param = proj4("EPSG:4326");
   }
 
-  function getCoord(coordArr, convert, srs){
+  function getCoord(coordArr, convert, srs, padding){
     var ts = $(coordArr).attr("ts");
     var cs = $(coordArr).attr("cs");
     var decimal = $(coordArr).attr("decimal");
     var arr_init = coordArr.innerHTML;
     var arr_ts = arr_init.split(ts);
     var arr_cs = [];
+    var coordinateSystem;
 
-    if(convert === true){
-      var coordinateSystem = proj4(epsg[srs.split(":")[1]]);
+      if(padding === true){
+        arr_cs = [[]];
 
-      for(var i = 0; i < arr_ts.length; i++){
-        arr_cs.push(proj4(coordinateSystem, WGS84Param, [
-          Number(arr_ts[i].split(cs)[0]),
-          Number(arr_ts[i].split(cs)[1]),
-        ]));
-      }}
-    else {
-      for(var j = 0; j < arr_ts.length; j++){
-        arr_cs.push([
-          Number(arr_ts[j].split(cs)[0]),
-          Number(arr_ts[j].split(cs)[1]),
-        ]);
+        if(convert === true){
+          coordinateSystem = proj4(epsg[srs.split(":")[1]]);
+
+          for(var i = 0; i < arr_ts.length; i++){
+            arr_cs[0].push(proj4(coordinateSystem, WGS84Param, [
+              Number(arr_ts[i].split(cs)[0]),
+              Number(arr_ts[i].split(cs)[1]),
+            ]));
+          }}
+          else {
+            for(var j = 0; j < arr_ts.length; j++){
+              arr_cs[0].push([
+                Number(arr_ts[j].split(cs)[0]),
+                Number(arr_ts[j].split(cs)[1]),
+              ]);
+            }
+          }
+      } else {
+        if(convert === true){
+          coordinateSystem = proj4(epsg[srs.split(":")[1]]);
+
+          for(var w = 0; w < arr_ts.length; w++){
+            arr_cs.push(proj4(coordinateSystem, WGS84Param, [
+              Number(arr_ts[w].split(cs)[0]),
+              Number(arr_ts[w].split(cs)[1]),
+            ]));
+          }}
+          else {
+            for(var t = 0; t < arr_ts.length; t++){
+              arr_cs.push([
+                Number(arr_ts[t].split(cs)[0]),
+                Number(arr_ts[t].split(cs)[1]),
+              ]);
+            }
+          }
       }
-    }
+
+
     return arr_cs;
   }
 
@@ -83,9 +108,18 @@ function GML2GeoJSON(gml, convert){
 
               if(convert === true){
                 srs = $(features[j].children[0]).attr("srsName");
-                polyArr.push(getCoord(coords, true, srs));
+                if(polygonArr.length === 1){
+                  polyArr.push(getCoord(coords, true, srs, false));
+                } else {
+                  polyArr.push(getCoord(coords, true, srs, true));
+                }
               } else {
-                polyArr.push(getCoord(coords, false));
+                if(polygonArr.length === 1){
+                  polyArr.push(getCoord(coords, false, {}, false));
+                } else {
+                  polyArr.push(getCoord(coords, false, {}, true));
+                }
+
               }
             }
 
@@ -98,8 +132,8 @@ function GML2GeoJSON(gml, convert){
             obj.geometry.coordinates = polyArr;
           }
           else if (type === "Polygon"){
-            poly = features[j].getElementsByTagName("Polygon")[0];
-            coords_single = poly.getElementsByTagName("coordinates")[0];
+            var poly = features[j].getElementsByTagName("Polygon")[0];
+            var coords_single = poly.getElementsByTagName("coordinates")[0];
             obj.geometry.type = "Polygon";
 
             if(convert === true){
@@ -109,6 +143,77 @@ function GML2GeoJSON(gml, convert){
               obj.geometry.coordinates = [getCoord(coords_single, false)];
             }
           }
+          else if (type === "MultiLineString"){
+            var lineArr = [];
+            var allLines = features[j].getElementsByTagName("LineString");
+            for(var l = 0; l < allLines.length; l++){
+              var lineCoords = allLines[l].getElementsByTagName("coordinates")[0];
+
+              if(convert === true){
+                srs = $(features[j].children[0]).attr("srsName");
+                lineArr.push(getCoord(lineCoords, true, srs)[0]); // [0] because lineStrings shouldn't be padded
+              } else {
+                lineArr.push(getCoord(lineCoords, false, srs)[0]);
+              }
+            }
+
+            if(lineArr.length === 1){
+              obj.geometry.type = "LineString";
+            } else {
+              obj.geometry.type = "MultiLineString";
+            }
+
+            obj.geometry.coordinates = lineArr;
+
+          }
+          else if (type === "LineString"){
+            var line = features[j].getElementsByTagName("LineString")[0];
+            var lineCoord_single = line.getElementsByTagName("coordinates")[0];
+            obj.geometry.type = "LineString";
+
+            if(convert === true){
+              srs = $(line).attr("srsName");
+              obj.geometry.coordinates = getCoord(lineCoord_single, true, srs);
+            } else {
+              obj.geometry.coordinates = getCoord(lineCoord_single, false);
+            }
+          }
+          else if (type === "MultiPoint"){
+            var pointArr = [];
+            var allPoints = features[j].getElementsByTagName("MultiPoint");
+
+            for(var k = 0; k < allPoints.length; k++){
+              var pointCoords = allPoints[k].getElementsByTagName("coordinates")[0];
+
+              if(convert === true){
+                srs = $(features[j].children[0]).attr("srsName");
+                pointArr.push(getCoord(pointCoords, true, srs));
+              } else {
+                pointArr.push(getCoord(pointCoords, false, srs));
+              }
+            }
+
+            if(pointArr.length === 1){
+              obj.geometry.type = "Point";
+            } else {
+              obj.geometry.type = "MultiPoint";
+            }
+
+            obj.geometry.coordinates = pointArr;
+
+          } else if (type === "Point"){
+            var point = features[j].getElementsByTagName("Point")[0];
+            var point_single = point.getElementsByTagName("coordinates")[0];
+            obj.geometry.type = "Point";
+
+            if(convert === true){
+              srs = $(point).attr("srsName");
+              obj.geometry.coordinates = getCoord(point_single, true, srs)[0];
+            } else {
+              obj.geometry.coordinates = getCoord(point_single, false)[0];
+            }
+          }
+
         }
       }
       geoJSON.features.push(obj);
