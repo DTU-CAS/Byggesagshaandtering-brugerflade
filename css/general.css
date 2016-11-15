@@ -124,6 +124,7 @@ height:100%;
   background: #434857;
   padding: 8px;
   margin-top: 2px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
 }
 
 #layers > li > p{
@@ -136,6 +137,37 @@ height:100%;
   transition: all .10s ease-in-out;
   -moz-transition: all .10s ease-in-out;
   -webkit-transition: all .10s;
+}
+
+.off{
+  background: #e64759 !important;
+}
+.on, .layer-on{
+  background: #1bc98e !important;
+}
+
+.layer-off{
+  background: #434857 !important;
+}
+
+#snapping{
+  transition: all .10s ease-in-out;
+  -moz-transition: all .10s ease-in-out;
+  -webkit-transition: all .10s;
+  max-width: 144px;
+  padding: 8px;
+  margin-left: 40px;
+  margin-top: 36px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
+
+#snapping > p{
+  margin: 0;
+  font-size: smaller;
+}
+
+#snapping:hover{
+  cursor: pointer;
 }
 
 .unselectable-text {

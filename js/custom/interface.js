@@ -104,5 +104,14 @@ function interface(){
     }
   });
 
+  $("#snapping").click(function(){
+    if($(this).hasClass("off")){
+      $(this).removeClass("off").addClass("on");
+      $(this).children().text("Disable Snapping");
+    } else {
+      $(this).removeClass("on").addClass("off");
+      $(this).children().text("Enable Snapping");
+    }
+  });
 
 }

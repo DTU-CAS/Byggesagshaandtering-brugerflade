@@ -92,8 +92,12 @@ function init(){
      wfsRequest = wfsBase + L.Util.getParamString(wfsParams, wfsBase, true);
 
     $.ajax({url: wfsRequest, success: function(result){
-      $("#layers").append("<li class='unselectable-text'><p>"+ name + "</p></li>");
-      eventJSON(GML2GeoJSON(result, true), style, highlight).addTo(map);
+      $("#layers").append("<li class='unselectable-text layer layer-on'><p>"+ name + "</p></li>");
+      var layer = eventJSON(GML2GeoJSON(result, true), style, highlight);
+      layer.addTo(map);
+
+      setTimeout(function(){ eventBindings(); }, 1000);
+
     }});
   }
 
@@ -112,15 +116,25 @@ function init(){
      weight: 4,
    }
   );
-  // addWfsLayer("ugis:T6833", "Ombyg og Renovering",
-  //   {color: "#e4d836"},
-  //   {color: "#f4e633"}
-  // );
-  // addWfsLayer("ugis:T7418", "Nybyggeri",
-  //   {color: "#e3a446"},
-  //   {color: "#ffc062"}
-  // );
+  addWfsLayer("ugis:T6833", "Ombyg og Renovering",
+    {color: "#e4d836"},
+    {color: "#f4e633"}
+  );
+  addWfsLayer("ugis:T7418", "Nybyggeri",
+    {color: "#e3a446"},
+    {color: "#ffc062"}
+  );
   // addWfsLayer("ugis:T18454", "Streetfood");
+
+  function eventBindings(){
+    $(".layer").click(function(){
+      if($(this).hasClass("layer-on")){
+        $(this).removeClass("layer-on").addClass("layer-off");
+      } else {
+        $(this).removeClass("layer-off").addClass("layer-on");
+      }
+    });
+  }
 
   // editing options
    options = {
