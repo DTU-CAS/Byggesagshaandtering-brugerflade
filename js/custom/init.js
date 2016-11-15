@@ -77,20 +77,9 @@ function init(){
     ['ugis:T18454', 'Streetfood'],
   ];
 
-  function addWfsLayer(string){
+  function addWfsLayer(string, name, style, highlight){
     var wfsBase = "http://services.nirasmap.niras.dk/kortinfo/services/Wfs.ashx?";
     var wfsParams = {
-      Site: 'Provider',
-      Page: 'DTU',
-      UserName: 'DTUView',
-      Password: 'Bruger12',
-      Service: 'WFS',
-      Request: 'GetFeature',
-      Typename: string,
-      Srsname: 'EPSG:3857',
-    };
-
-    var wfsParams_edit = {
       Site: 'Provider',
       Page: 'DTU',
       UserName: 'DTUedit',
@@ -100,26 +89,38 @@ function init(){
       Typename: string,
       Srsname: 'EPSG:3857',
     };
-     wfsRequest = wfsBase + L.Util.getParamString(wfsParams_edit, wfsBase, true);
+     wfsRequest = wfsBase + L.Util.getParamString(wfsParams, wfsBase, true);
 
     $.ajax({url: wfsRequest, success: function(result){
-      gml = result;
-      geo = GML2GeoJSON(result, true);
-      geo = popUpTable(GML2GeoJSON(result, true));
+      $("#layers").append("<li class='unselectable-text'><p>"+ name + "</p></li>");
+      eventJSON(GML2GeoJSON(result, true), style, highlight).addTo(map);
     }});
   }
-  // byggepladser
-  // addWfsLayer("ugis:T6832");
-  // Parkering
-  // addWfsLayer("ugis:T6834");
-  // Adgangsveje
-  // addWfsLayer("ugis:T6831"); // LineStrings
-  // Ombyg og Renovering
-  addWfsLayer("ugis:T6833");
-  // Nybyg
-  // addWfsLayer("ugis:T7418");
-  // StreetFood
-  // addWfsLayer("ugis:T18454");
+
+  addWfsLayer("ugis:T6832", "Byggepladser",
+    {color: "#e64759"},
+    {color: "#fb6c6c"}
+  );
+  addWfsLayer("ugis:T6834", "Parkering",
+    {color: "#1bc98e"},
+    {color: "#64f4b7"}
+  );
+  addWfsLayer("ugis:T6831", "Adgangsveje",
+    {color: "#9f86ff"},
+    {color: "#ab97fb",
+     dashArray: "5, 5",
+     weight: 4,
+   }
+  );
+  // addWfsLayer("ugis:T6833", "Ombyg og Renovering",
+  //   {color: "#e4d836"},
+  //   {color: "#f4e633"}
+  // );
+  // addWfsLayer("ugis:T7418", "Nybyggeri",
+  //   {color: "#e3a446"},
+  //   {color: "#ffc062"}
+  // );
+  // addWfsLayer("ugis:T18454", "Streetfood");
 
   // editing options
    options = {
@@ -136,7 +137,12 @@ function init(){
    };
 
   // Start loading geometry and attributes from MSSQL server with ID
-  popUpTable(json1);
+  eventJSON(json1,
+    {color: "#1ca8dd"},
+    {color: "#28edca"}
+  ).addTo(map);
+
+
 
   // Query the URL for parameters
   query = QueryString();

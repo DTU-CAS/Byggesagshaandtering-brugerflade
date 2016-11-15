@@ -45,13 +45,13 @@
 <body>
 
   <!-- TODO:
-  **  Make GML Parser parse all layers
   **  Make infoPanel.js universal
+  **  Clean and update GML-parser
   **  Save changes to layers
   **  Save styling on layers
   **  Add wfs layers to interface (enable snapping)
   **  Change leaflet.pm to leaflet.draw
-  **
+  **  If point convert to circle
 
   **  After node.js Move:
   **  Move conversion out of parser
@@ -70,6 +70,11 @@
       <div id="editButtons">
         <div id="polygons" class="unselectable-text disabled"><p>Create polygon</p></div>
         <div id="lines" class="unselectable-text disabled"><p>Create lines</p></div>
+      </div>
+
+      <div id="wfsLayers">
+        <p>Loaded Layers</p>
+        <ul id="layers"></ul>
       </div>
 
     </div>

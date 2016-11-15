@@ -109,6 +109,35 @@ height:100%;
   color: #888;
 }
 
+#wfsLayers{
+  margin-top: 25px;
+}
+
+#layers{
+  list-style: none;
+  text-align: left;
+  font-size: smaller;
+  max-width: 160px;
+}
+
+#layers > li{
+  background: #434857;
+  padding: 8px;
+  margin-top: 2px;
+}
+
+#layers > li > p{
+  margin: 0;
+}
+
+#layers > li:hover{
+  background: #1ca8dd;
+  cursor: pointer;
+  transition: all .10s ease-in-out;
+  -moz-transition: all .10s ease-in-out;
+  -webkit-transition: all .10s;
+}
+
 .unselectable-text {
   -moz-user-select: none;
   -webkit-user-select: none;

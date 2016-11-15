@@ -119,7 +119,6 @@ function GML2GeoJSON(gml, convert){
                 } else {
                   polyArr.push(getCoord(coords, false, {}, true));
                 }
-
               }
             }
 
@@ -213,12 +212,10 @@ function GML2GeoJSON(gml, convert){
               obj.geometry.coordinates = getCoord(point_single, false)[0];
             }
           }
-
         }
       }
       geoJSON.features.push(obj);
     }
  }
-
   return geoJSON;
 }

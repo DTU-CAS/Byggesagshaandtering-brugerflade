@@ -3,13 +3,14 @@
  * Author: NIRAS - Casper Fibæk
  */
 
- function popUpTable(geoJSON){
-   L.featureGroup(L.geoJSON(geoJSON, {"style": {"color": "#1ca8dd"}})
+ function eventJSON(geoJSON, style, highlight){
+   var layer = L.geoJSON(geoJSON, {"style": style})
      .on('click', function(e){
 
        var layer = this.getLayer(e.layer._leaflet_id);
        var feature = layer.feature;
        var latLng = e.latlng;
+       map.panTo(latLng);
 
        L.popup({closeButton: false})
        .setLatLng(latLng)
@@ -56,13 +57,13 @@
      })
      .on('mouseover', function(e){
        var feature = this.getLayer(e.layer._leaflet_id);
-       feature.setStyle({color: "#28edca"});
+       feature.setStyle(highlight);
      })
      .on('mouseout', function(e){
        var feature = this.getLayer(e.layer._leaflet_id);
-       feature.setStyle({color: "#1ca8dd"});
-     })
-     .addTo(map));
+       feature.setStyle(style);
+     });
+    return layer;
  }
 
  function addRow(key, attribute, addClass, keyEdit, attrEdit){
