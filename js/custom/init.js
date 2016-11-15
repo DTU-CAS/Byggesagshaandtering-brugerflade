@@ -62,7 +62,7 @@ function init(){
       maxZoom: 21,
       maxNativeZoom: 18,
       attribution: '&copy; <a href="http://DTU.dk">Danish Technical University</a>'
-    }).addTo(map);
+    });
 
     mainControl.addOverlay(baseParam, layers2add[i][1]);
   }
@@ -78,9 +78,8 @@ function init(){
       wfsParam += "SRSNAME=EPSG:3857";
   //
     $.ajax({url: wfsParam, success: function(result){
-        console.log("done...");
-        bob = result;
-        console.log(GML2GeoJSON(result, true));
+        geo = GML2GeoJSON(result, true);
+        popUpTable(geo);
     }});
 
   // editing options
