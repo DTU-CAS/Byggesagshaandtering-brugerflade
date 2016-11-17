@@ -50,7 +50,7 @@ function init(){
     ["18454", "Streetfood"],
   ];
 
-  addWMS(wmsLayers, true);
+  addWMS(wmsLayers, false);
 
   function addWMS(arr, getFeatureInfo){
     for (var k = 0; k < arr.length; k++){
@@ -142,7 +142,7 @@ function init(){
       });
     }
   }
-  function addWfsLayer(string, name, style, highlight){
+  function addWfsLayer(string, name, style, highlight, editable){
     var wfsBase = "http://services.nirasmap.niras.dk/kortinfo/services/Wfs.ashx?";
     var wfsParams = {
       Site: 'Provider',
@@ -154,11 +154,21 @@ function init(){
       Typename: string,
       Srsname: 'EPSG:3857',
     };
-     wfsRequest = wfsBase + L.Util.getParamString(wfsParams, wfsBase, true);
+    var wfsRequest = wfsBase + L.Util.getParamString(wfsParams, wfsBase, true);
+
+    function eventBindings(){
+      $(".layer").click(function(){
+        if($(this).hasClass("layer-on")){
+          $(this).removeClass("layer-on").addClass("layer-off");
+        } else {
+          $(this).removeClass("layer-off").addClass("layer-on");
+        }
+      });
+    }
 
     $.ajax({url: wfsRequest, success: function(result){
       $("#layers").append("<li class='unselectable-text layer layer-on'><p>"+ name + "</p></li>");
-      var layer = eventJSON(GML2GeoJSON(result, true), style, highlight);
+      var layer = eventJSON(GML2GeoJSON(result, true, editable), style, highlight);
       layer.addTo(map);
 
       setTimeout(function(){ eventBindings(); }, 1000);
@@ -166,43 +176,35 @@ function init(){
     }});
   }
 
-
-
-  // addWfsLayer("ugis:T6832", "Byggepladser",
-  //   {color: "#e64759"},
-  //   {color: "#fb6c6c"}
-  // );
-  // addWfsLayer("ugis:T6834", "Parkering",
-  //   {color: "#1bc98e"},
-  //   {color: "#64f4b7"}
-  // );
-  // addWfsLayer("ugis:T6831", "Adgangsveje",
-  //   {color: "#9f86ff"},
-  //   {color: "#ab97fb",
-  //    dashArray: "5, 5",
-  //    weight: 4,
-  //  }
-  // );
-  // addWfsLayer("ugis:T6833", "Ombyg og Renovering",
-  //   {color: "#e4d836"},
-  //   {color: "#f4e633"},
-  //   {editable: false}
-  // );
-  // addWfsLayer("ugis:T7418", "Nybyggeri",
-  //   {color: "#e3a446"},
-  //   {color: "#ffc062"}
-  // );
+  addWfsLayer("ugis:T6832", "Byggepladser",
+    {color: "#e64759"},
+    {color: "#fb6c6c"},
+    false
+  );
+  addWfsLayer("ugis:T6834", "Parkering",
+    {color: "#1bc98e"},
+    {color: "#64f4b7"},
+    false
+  );
+  addWfsLayer("ugis:T6831", "Adgangsveje",
+    {color: "#9f86ff"},
+    {color: "#ab97fb",
+     dashArray: "5, 5",
+     weight: 4,
+   },
+   false
+  );
+  addWfsLayer("ugis:T6833", "Ombyg og Renovering",
+    {color: "#e4d836"},
+    {color: "#f4e633"},
+    false
+  );
+  addWfsLayer("ugis:T7418", "Nybyggeri",
+    {color: "#e3a446"},
+    {color: "#ffc062"},
+    false
+  );
   // addWfsLayer("ugis:T18454", "Streetfood");
-
-  function eventBindings(){
-    $(".layer").click(function(){
-      if($(this).hasClass("layer-on")){
-        $(this).removeClass("layer-on").addClass("layer-off");
-      } else {
-        $(this).removeClass("layer-off").addClass("layer-on");
-      }
-    });
-  }
 
   // editing options
    options = {
@@ -221,13 +223,14 @@ function init(){
   // Start loading geometry and attributes from MSSQL server with ID
   eventJSON(json1,
     {color: "#1ca8dd"},
-    {color: "#28edca"}
+    {color: "#28edca"},
+    true
   ).addTo(map);
 
 
 
   // Query the URL for parameters
-  query = QueryString();
+  var query = QueryString();
   if(query){jQuery("#input").append("<p class='idTag'>" + "Byggesag: " + query.ID + "</p>");}
 
 
