@@ -18,15 +18,17 @@ function init(){
     format: 'image/png',
     maxZoom: 21,
     maxNativeZoom: 18,
-    attribution: '&copy; <a href="http://gst.dk">GeoDanmark</a>'
-  }).addTo(map);
+    attribution: '&copy; <a href="http://gst.dk">GeoDanmark</a>',
+    edgeBufferTiles: 1
+  });
 
   var OSMbasemap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,' +
           '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
     maxZoom: 21,
-    maxNativeZoom: 18
-  });
+    maxNativeZoom: 18,
+    edgeBufferTiles: 2
+  }).addTo(map);
 
   // Add to layer control
   var basemaps = {
@@ -47,10 +49,8 @@ function init(){
     // ["6833", "Ombyg og Renovering"],
     // ["7418", "Nybyg"],
     // ["7428", "Byggeri"],
-    ["18454", "Streetfood"],
+    // ["18454", "Streetfood"],
   ];
-
-  addWMS(wmsLayers, false);
 
   function addWMS(arr, getFeatureInfo){
     for (var k = 0; k < arr.length; k++){
@@ -175,35 +175,36 @@ function init(){
 
     }});
   }
+  addWMS(wmsLayers, false);
 
   addWfsLayer("ugis:T6832", "Byggepladser",
     {color: "#e64759"},
     {color: "#fb6c6c"},
     false
   );
-  addWfsLayer("ugis:T6834", "Parkering",
-    {color: "#1bc98e"},
-    {color: "#64f4b7"},
-    false
-  );
-  addWfsLayer("ugis:T6831", "Adgangsveje",
-    {color: "#9f86ff"},
-    {color: "#ab97fb",
-     dashArray: "5, 5",
-     weight: 4,
-   },
-   false
-  );
-  addWfsLayer("ugis:T6833", "Ombyg og Renovering",
-    {color: "#e4d836"},
-    {color: "#f4e633"},
-    false
-  );
-  addWfsLayer("ugis:T7418", "Nybyggeri",
-    {color: "#e3a446"},
-    {color: "#ffc062"},
-    false
-  );
+  // addWfsLayer("ugis:T6834", "Parkering",
+  //   {color: "#1bc98e"},
+  //   {color: "#64f4b7"},
+  //   false
+  // );
+  // addWfsLayer("ugis:T6831", "Adgangsveje",
+  //   {color: "#9f86ff"},
+  //   {color: "#ab97fb",
+  //    dashArray: "5, 5",
+  //    weight: 4,
+  //  },
+  //  false
+  // );
+  // addWfsLayer("ugis:T6833", "Ombyg og Renovering",
+  //   {color: "#e4d836"},
+  //   {color: "#f4e633"},
+  //   false
+  // );
+  // addWfsLayer("ugis:T7418", "Nybyggeri",
+  //   {color: "#e3a446"},
+  //   {color: "#ffc062"},
+  //   false
+  // );
   // addWfsLayer("ugis:T18454", "Streetfood");
 
   // editing options
@@ -226,8 +227,6 @@ function init(){
     {color: "#28edca"},
     true
   ).addTo(map);
-
-
 
   // Query the URL for parameters
   var query = QueryString();

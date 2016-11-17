@@ -22,15 +22,6 @@ function QueryString() {
   return query_string;
 }
 
-// // placeholder loader
-// function spin(){
-//   jQuery("body").append("<div class='spinner'></div>");
-//   setTimeout(endLoad, 3000);
-//   function endLoad(){
-//     jQuery(".spinner").remove();
-//   }
-// }
-
 function bounds2Arr(bounds, reverse){
   if(reverse === false){
     return [
@@ -53,7 +44,7 @@ function arr2bounds(arr, reverse){
     );
   } else {
     return L.latLngBounds(
-      L.latLng(arr[0][1], arr[0][0]), 
+      L.latLng(arr[0][1], arr[0][0]),
       L.latLng(arr[1][1], arr[1][0])
     );
   }

@@ -16,6 +16,9 @@
   <!-- leafletJS: Copyright (c) 2010-2016, Vladimir Agafonkin -->
   <script src="js/leaflet.js"></script>
   <script src="js/leaflet.pm.min.js"></script>
+  <script src="js/leaflet.draw.js"></script>
+  <script src="js/leaflet.edgeBuffer.js"></script>
+  <script src="js/leaflet.fade.js"></script>
   <link rel="stylesheet" type="text/css" href="css/leaflet.css">
   <link rel="stylesheet" type="text/css" href="css/leaflet-theme.css">
   <link rel="stylesheet" type="text/css" href="css/leaflet.pm.css">
@@ -49,6 +52,7 @@
   **  Clean and update GML-parser
   **  Save changes to layers
   **  Save styling on layers
+  **  Remove EPSG Files
   **  Add wfs layers to interface (enable snapping)
   **  Change leaflet.pm to leaflet.draw
   **  If point convert to circle
@@ -76,12 +80,9 @@
         <p>Loaded Layers</p>
         <ul id="layers"></ul>
         <div id="snapping" class="off unselectable-text">
-          <p>
-            Enable Snapping
-          </p>
+          <p>Enable Snapping</p>
         </div>
       </div>
-
     </div>
     <div id="map"></div>
   </div>
