@@ -40,43 +40,108 @@ function init(){
 
   var mainControl = L.control.layers(basemaps, overlayMaps, {collapsed: false}).addTo(map);
 
-// WMS
-  var layers2add_WMS = [
-    ['6832 ', 'Byggepladser'],
-    ['6834 ', 'Parkering'],
-    ['6831 ', 'Adgangsveje'],
-    ['6833 ', 'Ombyg og Renovering'],
-    ['7418', 'Nybyg'],
-    ['7428', 'Byggeri'],
-    ['18454', 'Streetfood'],
+  var wmsLayers = [
+    ["6832", "Byggepladser"],
+    // ["6834", "Parkering"],
+    // ["6831", "Adgangsveje"],
+    // ["6833", "Ombyg og Renovering"],
+    // ["7418", "Nybyg"],
+    // ["7428", "Byggeri"],
+    ["18454", "Streetfood"],
   ];
 
-  for(var i = 0; i < layers2add_WMS.length; i++){
-    var baseParam = L.tileLayer.wms("http://services.nirasmap.niras.dk/kortinfo/services/Wms.ashx?", {
-      site: 'Provider',
-      page: 'DTU',
-      UserName: 'DTUView',
-      Password: 'Bruger12',
-      version: '1.1.1',
-      layers: layers2add_WMS[i][0],
-      format: 'image/png',
-      maxZoom: 21,
-      maxNativeZoom: 18,
-      attribution: '&copy; <a href="http://DTU.dk">Danish Technical University</a>'
-    });
+  addWMS(wmsLayers, true);
 
-    mainControl.addOverlay(baseParam, layers2add_WMS[i][1]);
+  function addWMS(arr, getFeatureInfo){
+    for (var k = 0; k < arr.length; k++){
+      var layer = L.tileLayer.wms("http://services.nirasmap.niras.dk/kortinfo/services/Wms.ashx?", {
+        site: 'Provider',
+        page: 'DTU',
+        userName: 'DTUView',
+        password: 'Bruger12',
+        loginType: "KortInfo",
+        service: 'WMS',
+        version: "1.1.1",
+        layers: arr[k][0],
+        transparent: true,
+        format: 'image/png',
+        maxZoom: 21,
+        maxNativeZoom: 18,
+        attribution: '&copy; <a href="http://DTU.dk">Danish Technical University</a>'
+      });
+
+      mainControl.addOverlay(layer, arr[k][1]);
+    }
+
+    if(getFeatureInfo === true){
+      var layerString = "";
+      for (var j = 0; j < arr.length; j++){
+        layerString+= arr[j][0];
+        if(j !== arr.length -1){
+          layerString+= ",";
+        }
+      }
+
+      // Modified from: Ryan Clark @ GitHub
+      map.on('click', function(e){
+        var latLng = e.latlng;
+        var point = map.latLngToContainerPoint(latLng, map.getZoom());
+        var size = map.getSize();
+
+        // convert boundbox to srs
+        var WGS84Param = proj4("EPSG:4326");
+        var coordinateSystem = proj4(epsg["25832"]);
+        var bbox = bounds2Arr(map.getBounds(), true);
+        bbox[0] = proj4(WGS84Param, coordinateSystem, bbox[0]);
+        bbox[1] = proj4(WGS84Param, coordinateSystem, bbox[1]);
+        bbox = arr2bounds(bbox, true).toBBoxString();
+
+        var params = {
+          site: 'Provider',
+          page: 'DTU',
+          request: 'GetFeatureInfo',
+          userName: 'DTUView',
+          password: 'Bruger12',
+          service: 'WMS',
+          version: '1.1.1',
+          layers: "6832",
+          styles: "",
+          srs: 'EPSG:25832',
+          bbox: bbox,
+          width: size.x,
+          height: size.y,
+          query_layers: "6832",
+          x: point.x,
+          y: point.y,
+          type: 'nirasmap',
+          feature_count: 1,
+          info_format: 'text/xml'
+        };
+
+        content = layer._url + L.Util.getParamString(params, layer._url, true);
+
+        $.ajax({url: content, success: function(result){
+          fields = result.getElementsByTagName("field");
+
+          if(fields.length > 0){
+            var tableContent = "<table>";
+            for(var i = 0; i < fields.length; i++){
+              tableContent +=
+              "<tr class='table-row'>" +
+              "<td>" + $(fields[i]).attr("name") + "</td>" +
+              "<td>" + fields[i].innerHTML + "</td>";
+            }
+            tableContent += "</table>";
+
+            L.popup({ maxWidth: "600px"})
+              .setLatLng(latLng)
+              .setContent(tableContent)
+              .openOn(map);
+          }
+        }});
+      });
+    }
   }
-
-  var layers2add_WFS = [
-    ['ugis:T6832', 'Byggepladser'],
-    ['ugis:T6834', 'Parkering'],
-    ['ugis:T6831', 'Adgangsveje'],
-    ['ugis:T6833', 'Ombyg og Renovering'],
-    ['ugis:T7418', 'Nybyg'],
-    ['ugis:T18454', 'Streetfood'],
-  ];
-
   function addWfsLayer(string, name, style, highlight){
     var wfsBase = "http://services.nirasmap.niras.dk/kortinfo/services/Wfs.ashx?";
     var wfsParams = {
@@ -101,29 +166,32 @@ function init(){
     }});
   }
 
-  addWfsLayer("ugis:T6832", "Byggepladser",
-    {color: "#e64759"},
-    {color: "#fb6c6c"}
-  );
-  addWfsLayer("ugis:T6834", "Parkering",
-    {color: "#1bc98e"},
-    {color: "#64f4b7"}
-  );
-  addWfsLayer("ugis:T6831", "Adgangsveje",
-    {color: "#9f86ff"},
-    {color: "#ab97fb",
-     dashArray: "5, 5",
-     weight: 4,
-   }
-  );
-  addWfsLayer("ugis:T6833", "Ombyg og Renovering",
-    {color: "#e4d836"},
-    {color: "#f4e633"}
-  );
-  addWfsLayer("ugis:T7418", "Nybyggeri",
-    {color: "#e3a446"},
-    {color: "#ffc062"}
-  );
+
+
+  // addWfsLayer("ugis:T6832", "Byggepladser",
+  //   {color: "#e64759"},
+  //   {color: "#fb6c6c"}
+  // );
+  // addWfsLayer("ugis:T6834", "Parkering",
+  //   {color: "#1bc98e"},
+  //   {color: "#64f4b7"}
+  // );
+  // addWfsLayer("ugis:T6831", "Adgangsveje",
+  //   {color: "#9f86ff"},
+  //   {color: "#ab97fb",
+  //    dashArray: "5, 5",
+  //    weight: 4,
+  //  }
+  // );
+  // addWfsLayer("ugis:T6833", "Ombyg og Renovering",
+  //   {color: "#e4d836"},
+  //   {color: "#f4e633"},
+  //   {editable: false}
+  // );
+  // addWfsLayer("ugis:T7418", "Nybyggeri",
+  //   {color: "#e3a446"},
+  //   {color: "#ffc062"}
+  // );
   // addWfsLayer("ugis:T18454", "Streetfood");
 
   function eventBindings(){

@@ -30,3 +30,31 @@ function QueryString() {
 //     jQuery(".spinner").remove();
 //   }
 // }
+
+function bounds2Arr(bounds, reverse){
+  if(reverse === false){
+    return [
+      [bounds._northEast.lat, bounds._northEast.lng],
+      [bounds._southWest.lat, bounds._southWest.lng]
+    ];
+  } else {
+    return [
+      [bounds._northEast.lng, bounds._northEast.lat],
+      [bounds._southWest.lng, bounds._southWest.lat]
+    ];
+  }
+}
+
+function arr2bounds(arr, reverse){
+  if(reverse === false){
+    return L.latLngBounds(
+      L.latLng(arr[0][0], arr[0][1]),
+      L.latLng(arr[1][0], arr[1][1])
+    );
+  } else {
+    return L.latLngBounds(
+      L.latLng(arr[0][1], arr[0][0]), 
+      L.latLng(arr[1][1], arr[1][0])
+    );
+  }
+}
