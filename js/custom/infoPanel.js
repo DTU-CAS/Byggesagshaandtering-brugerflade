@@ -32,19 +32,19 @@
            $(this).fadeTo(100, 0.5).fadeTo(150, 1.0);
          });
 
-        if(layer.pm.enabled() === true){
+        if(map.editTools.drawing() === true){
           $("#editGeom").removeClass("disabled-edit").addClass("enabled-edit");
           $("#editGeom").first().text("Save edits");
         }
 
          $("#editGeom").click(function(e){
            if($(this).hasClass("disabled-edit")){
-             layer.pm.enable(options);
+             layer.enableEdit();
              $(this).removeClass("disabled-edit").addClass("enabled-edit");
              $(this).first().text("Save edits");
              map.closePopup();
            } else {
-             layer.pm.disable();
+             layer.disableEdit();
              $(this).removeClass("enabled-edit").addClass("disabled-edit");
              $(this).first().text("Edit Geometry");
            }

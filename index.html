@@ -15,13 +15,13 @@
   <!-- leaflet -->
   <!-- leafletJS: Copyright (c) 2010-2016, Vladimir Agafonkin -->
   <script src="js/leaflet.js"></script>
-  <script src="js/leaflet.pm.min.js"></script>
-  <script src="js/leaflet.draw.js"></script>
+  <script src="js/leaflet.editable.js"></script>
   <script src="js/leaflet.edgeBuffer.js"></script>
   <script src="js/leaflet.fade.js"></script>
   <link rel="stylesheet" type="text/css" href="css/leaflet.css">
+  <link rel="stylesheet" type="text/css" href="css/leaflet.draw.css">
   <link rel="stylesheet" type="text/css" href="css/leaflet-theme.css">
-  <link rel="stylesheet" type="text/css" href="css/leaflet.pm.css">
+  <!-- <link rel="stylesheet" type="text/css" href="css/leaflet.pm.css"> -->
 
   <!-- jQuery -->
   <script src="js/jquery-3.1.1.min.js"></script>
@@ -31,9 +31,6 @@
 
   <!-- proj4 -->
   <script src="js/proj4-2.3.15.js"></script>
-
-  <!-- geometry -->
-  <script src="geometry/Byggepladser.js"></script>
 
   <!-- custom -->
   <script src="js/custom/init.js"></script>
@@ -74,6 +71,7 @@
       <div id="editButtons">
         <div id="polygons" class="unselectable-text disabled"><p>Create polygon</p></div>
         <div id="lines" class="unselectable-text disabled"><p>Create lines</p></div>
+        <div id="markers" class="unselectable-text disabled"><p>Create markers</p></div>
       </div>
 
       <div id="wfsLayers">

@@ -5,6 +5,15 @@
   border-radius: 0 !important ;
 }
 
+.leaflet-control-zoom-in, .leaflet-control-zoom-out{
+  background: #252830 !important;
+  color: #fff !important;
+  border-radius: 0 !important;
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+}
+
 .leaflet-popup-content-wrapper{
   border-radius: 0 !important;
 }
@@ -16,4 +25,28 @@
 
 .leaflet-popup-close-button{
   display: none;
+}
+
+.leaflet-editing-icon, .leaflet-vertex-icon{
+  border-radius: 50%;
+  width: 12px !important;
+  height: 12px !important;
+  margin-left: -6px !important;
+  margin-top: -6px !important;
+}
+
+.leaflet-middle-icon{
+  border-radius: 50%;
+  height: 10px !important;
+  width: 10px !important;
+  margin-left: -5px !important;
+  margin-top: -5px !important;
+}
+
+div.leaflet-top.leaflet-left{
+  /*display: none;*/
+}
+
+.leaflet-popup{
+  min-width: 284px;
 }

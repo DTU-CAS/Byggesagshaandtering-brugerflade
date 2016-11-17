@@ -6,11 +6,12 @@ function init(){
     zoom: 17,
     maxZoom: 21,
     minZoom: 14,
-    zoomControl: false
+    zoomControl: true,
+    editable: true
   });
 
   // GST Ortho 2016
-  var	GST_Ortho = L.tileLayer.wms('http://kortforsyningen.kms.dk/?servicename=orto_foraar', {
+  var	GST_Ortho = L.tileLayer.wms('https://kortforsyningen.kms.dk/?servicename=orto_foraar', {
     login: 'qgisdk',
     password: 'qgisdk',
     version: '1.1.1',
@@ -20,7 +21,7 @@ function init(){
     maxNativeZoom: 18,
     attribution: '&copy; <a href="http://gst.dk">GeoDanmark</a>',
     edgeBufferTiles: 1
-  });
+  }).addTo(map);
 
   var OSMbasemap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,' +
@@ -28,7 +29,7 @@ function init(){
     maxZoom: 21,
     maxNativeZoom: 18,
     edgeBufferTiles: 2
-  }).addTo(map);
+  });
 
   // Add to layer control
   var basemaps = {
@@ -142,6 +143,7 @@ function init(){
       });
     }
   }
+  addWMS(wmsLayers, false);
   function addWfsLayer(string, name, style, highlight, editable){
     var wfsBase = "http://services.nirasmap.niras.dk/kortinfo/services/Wfs.ashx?";
     var wfsParams = {
@@ -175,18 +177,17 @@ function init(){
 
     }});
   }
-  addWMS(wmsLayers, false);
 
   addWfsLayer("ugis:T6832", "Byggepladser",
     {color: "#e64759"},
     {color: "#fb6c6c"},
     false
   );
-  // addWfsLayer("ugis:T6834", "Parkering",
-  //   {color: "#1bc98e"},
-  //   {color: "#64f4b7"},
-  //   false
-  // );
+  addWfsLayer("ugis:T6834", "Parkering",
+    {color: "#1bc98e"},
+    {color: "#64f4b7"},
+    false
+  );
   // addWfsLayer("ugis:T6831", "Adgangsveje",
   //   {color: "#9f86ff"},
   //   {color: "#ab97fb",
@@ -207,20 +208,6 @@ function init(){
   // );
   // addWfsLayer("ugis:T18454", "Streetfood");
 
-  // editing options
-   options = {
-     draggable: true,
-     snappable: true,
-     snapDistance: 30,
-     templineStyle: {
-         color: 'red',
-     },
-     hintlineStyle: {
-         color: 'red',
-         dashArray: [5, 5],
-     },
-   };
-
   // Start loading geometry and attributes from MSSQL server with ID
   eventJSON(json1,
     {color: "#1ca8dd"},
@@ -231,7 +218,6 @@ function init(){
   // Query the URL for parameters
   var query = QueryString();
   if(query){jQuery("#input").append("<p class='idTag'>" + "Byggesag: " + query.ID + "</p>");}
-
 
   interface();
 }
