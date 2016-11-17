@@ -7,7 +7,6 @@
 
   <title>DTU Byggesagsh&aring;ndtering</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <link rel="icon" href="images/DTU32.ico">
   <link rel="stylesheet" type="text/css" href="css/general.css">
   <link rel="stylesheet" type="text/css" href="css/table.css">
@@ -18,16 +17,14 @@
   <script src="js/leaflet.editable.js"></script>
   <script src="js/leaflet.edgeBuffer.js"></script>
   <script src="js/leaflet.fade.js"></script>
+  <script src="js/leaflet.GeometryUtil.js"></script>
+  <script src="js/leaflet.snap.js"></script>
   <link rel="stylesheet" type="text/css" href="css/leaflet.css">
-  <link rel="stylesheet" type="text/css" href="css/leaflet.draw.css">
   <link rel="stylesheet" type="text/css" href="css/leaflet-theme.css">
-  <!-- <link rel="stylesheet" type="text/css" href="css/leaflet.pm.css"> -->
 
   <!-- jQuery -->
   <script src="js/jquery-3.1.1.min.js"></script>
 
-  <!-- font awsome -->
-  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 
   <!-- proj4 -->
   <script src="js/proj4-2.3.15.js"></script>
@@ -41,9 +38,12 @@
   <script src="js/custom/testData.js"></script>
   <script src="js/custom/GML-parser.js"></script>
 
+  <!-- custom fonts -->
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
 </head>
 <body>
-
   <!-- TODO:
   **  Make infoPanel.js universal
   **  Clean and update GML-parser
@@ -61,7 +61,6 @@
   **        Add toopTips
  -->
 
-
   <div id="interface">
     <div id="input">
       <a class="logo" href="index.html">
@@ -75,7 +74,7 @@
       </div>
 
       <div id="wfsLayers">
-        <p>Loaded Layers</p>
+        <p>WFS layers</p>
         <ul id="layers"></ul>
         <div id="snapping" class="off unselectable-text">
           <p>Enable Snapping</p>

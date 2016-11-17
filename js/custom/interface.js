@@ -1,39 +1,46 @@
 function interface(){
-  var options = {
-      templineStyle: {
-          color: 'red',
-      },
-      hintlineStyle: {
-          color: 'red',
-          dashArray: [5, 5],
-      },
-  };
-
   $("#polygons").click(function(){
     if($(this).hasClass("disabled")){
-      // map.pm.enableDraw('Poly', options);
+      map.editTools.startPolygon();
       $("#editButtons > div").removeClass("selected");
       $(this).removeClass("disabled").addClass("enabled").addClass("selected");
       $("#lines").addClass("unselectable");
+      $("#markers").addClass("unselectable");
     } else {
-      // map.pm.disableDraw('Poly');
+      map.editTools.commitDrawing();
       $(this).removeClass("enabled").removeClass("selected").addClass("disabled");
       $("#lines").removeClass("unselectable");
+      $("#markers").removeClass("unselectable");
     }
   });
 
   $("#lines").click(function(){
     if($(this).hasClass("disabled")){
       map.editTools.startPolyline();
-      // map.pm.enableDraw('Line', options);
       $("#editButtons > div").removeClass("selected");
       $(this).removeClass("disabled").addClass("enabled").addClass("selected");
       $("#polygons").addClass("unselectable");
+      $("#markers").addClass("unselectable");
     } else {
-      // map.pm.disableDraw('Line');
       map.editTools.commitDrawing();
       $(this).removeClass("enabled").removeClass("selected").addClass("disabled");
       $("#polygons").removeClass("unselectable");
+      $("#markers").removeClass("unselectable");
+    }
+  });
+
+  $("#markers").click(function(){
+    if($(this).hasClass("disabled")){
+      // map.editTools.startPolyline();
+      $("#editButtons > div").removeClass("selected");
+      $(this).removeClass("disabled").addClass("enabled").addClass("selected");
+      $("#polygons").addClass("unselectable");
+      $("#lines").addClass("unselectable");
+    } else {
+      // map.editTools.commitDrawing();
+      $(this).removeClass("enabled").removeClass("selected").addClass("disabled");
+      $("#polygons").removeClass("unselectable");
+      $("#lines").removeClass("unselectable");
     }
   });
 

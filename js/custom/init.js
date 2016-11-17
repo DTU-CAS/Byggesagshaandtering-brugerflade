@@ -144,6 +144,7 @@ function init(){
     }
   }
   addWMS(wmsLayers, false);
+
   function addWfsLayer(string, name, style, highlight, editable){
     var wfsBase = "http://services.nirasmap.niras.dk/kortinfo/services/Wfs.ashx?";
     var wfsParams = {
@@ -158,23 +159,21 @@ function init(){
     };
     var wfsRequest = wfsBase + L.Util.getParamString(wfsParams, wfsBase, true);
 
-    function eventBindings(){
-      $(".layer").click(function(){
-        if($(this).hasClass("layer-on")){
-          $(this).removeClass("layer-on").addClass("layer-off");
-        } else {
-          $(this).removeClass("layer-off").addClass("layer-on");
-        }
-      });
-    }
-
     $.ajax({url: wfsRequest, success: function(result){
-      $("#layers").append("<li class='unselectable-text layer layer-on'><p>"+ name + "</p></li>");
-      var layer = eventJSON(GML2GeoJSON(result, true, editable), style, highlight);
-      layer.addTo(map);
+      var geom = GML2GeoJSON(result, true);
+      var layer = eventJSON(geom, style, highlight, editable);
 
-      setTimeout(function(){ eventBindings(); }, 1000);
-
+      var listItem = $("<li class='unselectable-text layer layer-off'><p>" + name + "</p></li>")
+        .on("click", function(){
+          if($(this).hasClass("layer-on")){
+            $(this).removeClass("layer-on").addClass("layer-off");
+            map.removeLayer(layer);
+          } else {
+            $(this).removeClass("layer-off").addClass("layer-on");
+            map.addLayer(layer);
+          }
+        });
+      $("#layers").append(listItem);
     }});
   }
 
@@ -188,24 +187,24 @@ function init(){
     {color: "#64f4b7"},
     false
   );
-  // addWfsLayer("ugis:T6831", "Adgangsveje",
-  //   {color: "#9f86ff"},
-  //   {color: "#ab97fb",
-  //    dashArray: "5, 5",
-  //    weight: 4,
-  //  },
-  //  false
-  // );
-  // addWfsLayer("ugis:T6833", "Ombyg og Renovering",
-  //   {color: "#e4d836"},
-  //   {color: "#f4e633"},
-  //   false
-  // );
-  // addWfsLayer("ugis:T7418", "Nybyggeri",
-  //   {color: "#e3a446"},
-  //   {color: "#ffc062"},
-  //   false
-  // );
+  addWfsLayer("ugis:T6831", "Adgangsveje",
+    {color: "#9f86ff"},
+    {color: "#ab97fb",
+     dashArray: "5, 5",
+     weight: 4,
+   },
+   false
+  );
+  addWfsLayer("ugis:T6833", "Ombyg og Renovering",
+    {color: "#e4d836"},
+    {color: "#f4e633"},
+    false
+  );
+  addWfsLayer("ugis:T7418", "Nybyggeri",
+    {color: "#e3a446"},
+    {color: "#ffc062"},
+    false
+  );
   // addWfsLayer("ugis:T18454", "Streetfood");
 
   // Start loading geometry and attributes from MSSQL server with ID
