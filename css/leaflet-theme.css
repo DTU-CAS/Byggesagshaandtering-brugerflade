@@ -12,6 +12,15 @@
   width: 36px !important;
   height: 36px !important;
   line-height: 36px !important;
+  transition: all .15s ease-in-out;
+  -moz-transition: all .15s ease-in-out;
+  -webkit-transition: all .15s;
+}
+
+.leaflet-control-zoom-in.leaflet-disabled,
+.leaflet-control-zoom-out.leaflet-disabled{
+  background: #3b3c41 !important;
+  opacity: 0.8;
 }
 
 .leaflet-popup-content-wrapper{
@@ -48,5 +57,5 @@ div.leaflet-top.leaflet-left{
 }
 
 .leaflet-popup{
-  min-width: 284px;
+  min-width: 240px;
 }

@@ -1,5 +1,5 @@
 /*
- * This script takes an object and creates a bootstrap editable table
+ * Makes a geojson show a table of attributes on click
  * Author: NIRAS - Casper Fibæk
  */
 
@@ -18,6 +18,8 @@
        .openOn(map);
 
        if(editable === true){
+         $(".leaflet-popup").css("width", "284px");
+
          $('.table-remove').on('click', function(){
            $(this).parent().remove();
          });
@@ -44,7 +46,7 @@
              $(this).first().text("Save edits");
              map.closePopup();
            } else {
-             layer.disableEdit();
+             layer.toggleEdit();
              $(this).removeClass("enabled-edit").addClass("disabled-edit");
              $(this).first().text("Edit Geometry");
            }
@@ -125,18 +127,9 @@ function infoPanel(obj, editable){
     keys = Object.keys(obj);
 
     for (var j = 0; j < keys.length; j++) {
-        if(typeof(obj[keys[j]]) === "boolean" || obj[keys[j]] === "true" || obj[keys[j]] === "false"){
-          table += addRow(keys[j], obj[keys[j]], "boolean");
-        } else if(isNaN(obj[keys[j]]) !== "false"){
-          table += addRow(keys[j], obj[keys[j]], "number");
-        } else {
-          table += addRow(keys[j], obj[keys[j]], "string");
-        }
+      table += addRow(keys[j], obj[keys[j]], "string");
     }
-
     table += "</table></div>";
   }
-
-
   return table;
 }

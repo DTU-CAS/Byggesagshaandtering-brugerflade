@@ -5,8 +5,9 @@ function init(){
     center: [55.787016, 12.522536],
     zoom: 17,
     maxZoom: 21,
-    minZoom: 14,
+    minZoom: 13,
     zoomControl: true,
+    doubleClickZoom: false,
     editable: true
   });
 
@@ -45,12 +46,12 @@ function init(){
 
   var wmsLayers = [
     ["6832", "Byggepladser"],
-    // ["6834", "Parkering"],
-    // ["6831", "Adgangsveje"],
-    // ["6833", "Ombyg og Renovering"],
-    // ["7418", "Nybyg"],
-    // ["7428", "Byggeri"],
-    // ["18454", "Streetfood"],
+    ["6834", "Parkering"],
+    ["6831", "Adgangsveje"],
+    ["6833", "Ombyg og Renovering"],
+    ["7418", "Nybyg"],
+    ["7428", "Byggeri"],
+    ["18454", "Streetfood"],
   ];
 
   function addWMS(arr, getFeatureInfo){
@@ -143,7 +144,7 @@ function init(){
       });
     }
   }
-  addWMS(wmsLayers, false);
+  // addWMS(wmsLayers, false);
 
   function addWfsLayer(string, name, style, highlight, editable){
     var wfsBase = "http://services.nirasmap.niras.dk/kortinfo/services/Wfs.ashx?";
@@ -187,28 +188,28 @@ function init(){
     {color: "#64f4b7"},
     false
   );
-  addWfsLayer("ugis:T6831", "Adgangsveje",
-    {color: "#9f86ff"},
-    {color: "#ab97fb",
-     dashArray: "5, 5",
-     weight: 4,
-   },
-   false
-  );
-  addWfsLayer("ugis:T6833", "Ombyg og Renovering",
-    {color: "#e4d836"},
-    {color: "#f4e633"},
-    false
-  );
-  addWfsLayer("ugis:T7418", "Nybyggeri",
-    {color: "#e3a446"},
-    {color: "#ffc062"},
-    false
-  );
+  // addWfsLayer("ugis:T6831", "Adgangsveje",
+  //   {color: "#9f86ff"},
+  //   {color: "#ab97fb",
+  //    dashArray: "5, 5",
+  //    weight: 4,
+  //  },
+  //  false
+  // );
+  // addWfsLayer("ugis:T6833", "Ombyg og Renovering",
+  //   {color: "#e4d836"},
+  //   {color: "#f4e633"},
+  //   false
+  // );
+  // addWfsLayer("ugis:T7418", "Nybyggeri",
+  //   {color: "#e3a446"},
+  //   {color: "#ffc062"},
+  //   false
+  // );
   // addWfsLayer("ugis:T18454", "Streetfood");
 
   // Start loading geometry and attributes from MSSQL server with ID
-  eventJSON(json1,
+  startLayer = eventJSON(json1,
     {color: "#1ca8dd"},
     {color: "#28edca"},
     true

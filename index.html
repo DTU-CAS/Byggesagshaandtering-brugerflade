@@ -14,17 +14,17 @@
   <!-- leaflet -->
   <!-- leafletJS: Copyright (c) 2010-2016, Vladimir Agafonkin -->
   <script src="js/leaflet.js"></script>
+  <script src="js/leaflet.GeometryUtil.js"></script>
+  <script src="js/leaflet.snap.js"></script>
+  <script src="js/leaflet.path.drag.js"></script>
   <script src="js/leaflet.editable.js"></script>
   <script src="js/leaflet.edgeBuffer.js"></script>
   <script src="js/leaflet.fade.js"></script>
-  <script src="js/leaflet.GeometryUtil.js"></script>
-  <script src="js/leaflet.snap.js"></script>
   <link rel="stylesheet" type="text/css" href="css/leaflet.css">
   <link rel="stylesheet" type="text/css" href="css/leaflet-theme.css">
 
   <!-- jQuery -->
   <script src="js/jquery-3.1.1.min.js"></script>
-
 
   <!-- proj4 -->
   <script src="js/proj4-2.3.15.js"></script>
@@ -45,14 +45,12 @@
 </head>
 <body>
   <!-- TODO:
-  **  Make infoPanel.js universal
-  **  Clean and update GML-parser
+  **  Add wfs layers to interface (enable snapping)
   **  Save changes to layers
   **  Save styling on layers
   **  Remove EPSG Files
-  **  Add wfs layers to interface (enable snapping)
-  **  Change leaflet.pm to leaflet.draw
-  **  If point convert to circle
+  **  Make infoPanel.js universal
+  **  Clean and update GML-parser
 
   **  After node.js Move:
   **  Move conversion out of parser
@@ -68,16 +66,16 @@
       </a>
 
       <div id="editButtons">
-        <div id="polygons" class="unselectable-text disabled"><p>Create polygon</p></div>
-        <div id="lines" class="unselectable-text disabled"><p>Create lines</p></div>
-        <div id="markers" class="unselectable-text disabled"><p>Create markers</p></div>
+        <div id="polygons" class="unselectable-text"><p>Create polygon</p></div>
+        <div id="lines" class="unselectable-text"><p>Create lines</p></div>
+        <div id="markers" class="unselectable-text"><p>Create markers</p></div>
       </div>
 
       <div id="wfsLayers">
         <p>WFS layers</p>
         <ul id="layers"></ul>
         <div id="snapping" class="off unselectable-text">
-          <p>Enable Snapping</p>
+          <p>Snapping</p>
         </div>
       </div>
     </div>
