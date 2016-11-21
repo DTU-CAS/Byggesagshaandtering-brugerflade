@@ -45,37 +45,57 @@
 </head>
 <body>
   <!-- TODO:
-  **  Add wfs layers to interface (enable snapping)
   **  Save changes to layers
   **  Save styling on layers
   **  Remove EPSG Files
   **  Make infoPanel.js universal
+  **  Add wfs layers to interface (enable snapping)
   **  Clean and update GML-parser
 
   **  After node.js Move:
   **  Move conversion out of parser
 
-  ** style: Keep highlight while popup is open
-  **        Add toopTips
+  <a class="logo" href="index.html">
+    <img alt="Denmark's Technical University" src="images/DTU_logo_white.png">
+  </a>
+
+  **  Add toopTips
  -->
 
   <div id="interface">
     <div id="input">
-      <a class="logo" href="index.html">
-        <img alt="Denmark's Technical University" src="images/DTU_logo_white.png">
-      </a>
-
-      <div id="editButtons">
-        <div id="polygons" class="unselectable-text"><p>Create polygon</p></div>
-        <div id="lines" class="unselectable-text"><p>Create lines</p></div>
-        <div id="markers" class="unselectable-text"><p>Create markers</p></div>
+      <div id="menu">
+        <div id="menu-view-top" class="unselectable-text menu-item">
+          <p>
+            view
+          </p>
+        </div>
+        <div id="menu-edit-top" class="unselectable-text menu-item menu-selected">
+          <p>
+            edit
+          </p>
+        </div>
+        <div id="menu-tools-top" class="unselectable-text menu-item">
+          <p>
+            tools
+          </p>
+        </div>
       </div>
+      <div id="menu-edit-main" class="main">
+        <div id="editLayer">
+          <div id="editButtons">
+            <div id="polygons" class="unselectable-text"><p>Create polygon</p></div>
+            <div id="lines" class="unselectable-text"><p>Create lines</p></div>
+            <div id="markers" class="unselectable-text"><p>Create markers</p></div>
+          </div>
 
-      <div id="wfsLayers">
-        <p>WFS layers</p>
-        <ul id="layers"></ul>
-        <div id="snapping" class="off unselectable-text">
-          <p>Snapping</p>
+          <div id="wfsLayers">
+            <p>WFS layers</p>
+            <ul id="layers"></ul>
+            <div id="snapping" class="off unselectable-text">
+              <p>Snapping</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

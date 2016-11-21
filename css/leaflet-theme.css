@@ -1,4 +1,8 @@
 /* We're using !important to overwrite basic leaflet styles here */
+.leaflet-container{
+  outline: none;
+}
+
 .leaflet-control-layers{
   background: #252830 !important;
   color: #fff !important;

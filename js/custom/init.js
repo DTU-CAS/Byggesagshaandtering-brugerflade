@@ -6,6 +6,9 @@ function init(){
     zoom: 17,
     maxZoom: 21,
     minZoom: 13,
+    zoomSnap: 0.5,
+    inertia: true,
+    keyboardPanDelta: 100,
     zoomControl: true,
     doubleClickZoom: false,
     editable: true
@@ -163,6 +166,10 @@ function init(){
     $.ajax({url: wfsRequest, success: function(result){
       var geom = GML2GeoJSON(result, true);
       var layer = eventJSON(geom, style, highlight, editable);
+      layer.eachLayer(function(layer){
+        layer.options.editable = false;
+        // console.log(layer);
+      });
 
       var listItem = $("<li class='unselectable-text layer layer-off'><p>" + name + "</p></li>")
         .on("click", function(){
@@ -217,7 +224,7 @@ function init(){
 
   // Query the URL for parameters
   var query = QueryString();
-  if(query){jQuery("#input").append("<p class='idTag'>" + "Byggesag: " + query.ID + "</p>");}
+  if(query){jQuery(".main").append("<p class='idTag'>" + "Byggesag: " + query.ID + "</p>");}
 
   interface();
 }

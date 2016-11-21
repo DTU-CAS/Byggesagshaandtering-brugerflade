@@ -1,37 +1,31 @@
 function interface(){
   $("#polygons").click(function(){
-    if($(this).hasClass("selected")){
-      disableEdits();
-      $(".selected").removeClass("selected");
-    } else {
+    $(".selected").removeClass("selected");
       disableEdits();
       map.editTools.startPolygon();
-      $(".selected").removeClass("selected");
       $(this).addClass("selected");
-    }
   });
 
   $("#lines").click(function(){
-    if($(this).hasClass("selected")){
-      disableEdits();
-      $(".selected").removeClass("selected");
-    } else {
+    $(".selected").removeClass("selected");
       disableEdits();
       map.editTools.startPolyline();
-      $(".selected").removeClass("selected");
       $(this).addClass("selected");
-    }
   });
 
   $("#markers").click(function(){
-    if($(this).hasClass("selected")){
+    $(".selected").removeClass("selected");
+    disableEdits();
+    map.editTools.startMarker();
+    $(this).addClass("selected");
+
+    $("#map").one("click", function(){
       disableEdits();
       $(".selected").removeClass("selected");
-    } else {
-      map.editTools.startMarker();
-      $(".selected").removeClass("selected");
-      $(this).addClass("selected");
-    }
+      $("#map").css("cursor", "inherit");
+      console.log("i fired");
+    });
+
   });
 
   $("#snapping").click(function(){
@@ -42,16 +36,27 @@ function interface(){
     }
   });
 
+  $(".menu-item").click(function(){
+    if(!$(this).hasClass("menu-selected")){
+      $(".menu-selected").removeClass("menu-selected");
+      $(this).addClass("menu-selected");
+    }
+  });
+
   function enableEdits(){
     map.eachLayer(function(layer){
+      // console.log(layer);
       if (layer instanceof L.Path){
         if (typeof layer.editor == 'undefined'){
-          layer.enableEdit();
+          if(layer.options.editable !== false){
+            layer.enableEdit();
+          }
       }}
     });
   }
 
   function disableEdits(){
+    map.editTools.stopDrawing();
     map.eachLayer(function(layer){
       if(layer.editor){
         if(layer.editor._enabled === true){
@@ -60,23 +65,36 @@ function interface(){
     });
   }
 
-  $("#map").on('keydown', function(e) {
-     if (e.keyCode === 27) { // esc
-       disableEdits();
-       $(".selected").removeClass("selected");
-     } else if (e.keyCode === 220){ // ½
+  $("#map").keyup(function(e){
+    if (e.keyCode === 27) { // esc
+      disableEdits();
+      $(".selected").removeClass("selected");
+    }
+  });
+
+  map.on('keypress', function(e) {
+    if (e.originalEvent.keyCode === 189){ // ½
        enableEdits();
-     } else if (e.keyCode === 49){ // Number: 1
+     } else if (e.originalEvent.keyCode === 49){ // Number: 1
        $("#polygons").click();
-     } else if (e.keyCode === 50){ // Number: 2
+     } else if (e.originalEvent.keyCode === 50){ // Number: 2
        $("#lines").click();
-     } else if (e.keyCode === 51){ // Number: 3
+     } else if (e.originalEvent.keyCode === 51){ // Number: 3
        $("#markers").click();
      }
-  }).dblclick(function() {
-    disableEdits();
-    $(".selected").removeClass("selected");
-  });
+  })
+    .on('editable:editing', function (e) {
+      // e.layer.setStyle({color: 'DarkRed'});
+    })
+    .on('editable:created', function (e) {
+      e.layer.options.editable = true;
+      // e.layer.setStyle({color: 'blue'});
+    });
+
+$(document).dblclick(function() {
+  disableEdits();
+  $(".selected").removeClass("selected");
+});
 
   var deleteShape = function (e) {
     if ((e.originalEvent.ctrlKey || e.originalEvent.metaKey) && this.editEnabled()) this.editor.deleteShapeAt(e.latlng);
