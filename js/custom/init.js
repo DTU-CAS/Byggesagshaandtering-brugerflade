@@ -48,17 +48,32 @@ function init(){
   var mainControl = L.control.layers(basemaps, overlayMaps, {collapsed: false}).addTo(map);
 
   var wmsLayers = [
-    ["6832", "Byggepladser"],
-    ["6834", "Parkering"],
-    ["6831", "Adgangsveje"],
-    ["6833", "Ombyg og Renovering"],
-    ["7418", "Nybyg"],
+    // ["6832", "Byggepladser"],
+    // ["6834", "Parkering"],
+    // ["6831", "Adgangsveje"],
+    // ["6833", "Ombyg og Renovering"],
+    // ["7418", "Nybyg"],
     ["7428", "Byggeri"],
     ["18454", "Streetfood"],
   ];
 
   function addWMS(arr, getFeatureInfo){
+    var layerContainer = $("<div class='layer-container'></div>");
+    var layerList = $("<ul='layer-list'></ul>");
+
+    var bob = function(li, layer){
+      if($(this).hasClass("on")){
+        map.removeLayer(layer);
+        $(this).removeClass("on").addClass("off");
+      } else {
+        map.addLayer(layer);
+        $(this).removeClass("off").addClass("on");
+      }
+    };
+
     for (var k = 0; k < arr.length; k++){
+      var listItem = $("<li class='off'>" + arr[k][1] + "</li>");
+      
       var layer = L.tileLayer.wms("http://services.nirasmap.niras.dk/kortinfo/services/Wms.ashx?", {
         site: 'Provider',
         page: 'DTU',
@@ -75,8 +90,12 @@ function init(){
         attribution: '&copy; <a href="http://DTU.dk">Danish Technical University</a>'
       });
 
-      mainControl.addOverlay(layer, arr[k][1]);
+      $(layerList).append(listItem);
+      $(layerContainer).append(layerList);
+
+      // mainControl.addOverlay(layer, arr[k][1]);
     }
+    $("#wmsLayers").append(layerContainer);
 
     if(getFeatureInfo === true){
       var layerString = "";
@@ -147,7 +166,7 @@ function init(){
       });
     }
   }
-  // addWMS(wmsLayers, false);
+  addWMS(wmsLayers, false);
 
   function addWfsLayer(string, name, style, highlight, editable){
     var wfsBase = "http://services.nirasmap.niras.dk/kortinfo/services/Wfs.ashx?";
@@ -208,6 +227,11 @@ function init(){
     {color: "#f4e633"},
     false
   );
+  // addWfsLayer("ugis:T6828", "Byggeri",
+  //   {},
+  //   {},
+  //   false
+  // );
   addWfsLayer("ugis:T7418", "Nybyggeri",
     {color: "#e3a446"},
     {color: "#ffc062"},
@@ -216,7 +240,7 @@ function init(){
   // addWfsLayer("ugis:T18454", "Streetfood");
 
   // Start loading geometry and attributes from MSSQL server with ID
-  startLayer = eventJSON(json1,
+  var startLayer = eventJSON(json1,
     {color: "#1ca8dd"},
     {color: "#28edca"},
     true
@@ -224,7 +248,7 @@ function init(){
 
   // Query the URL for parameters
   var query = QueryString();
-  if(query){jQuery(".main").append("<p class='idTag'>" + "Byggesag: " + query.ID + "</p>");}
+  if(query){jQuery(".theme").append("<p class='idTag'>" + "Byggesag: " + query.ID + "</p>");}
 
   interface();
 }

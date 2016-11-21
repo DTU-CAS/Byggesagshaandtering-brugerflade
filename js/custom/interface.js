@@ -35,8 +35,9 @@ function interface(){
         .addClass("closed")
         .empty()
         .append("<i class='fa fa-angle-double-left' aria-hidden='true'></i>")
+        .css("background", "#252830;")
         .animate({
-          right: "-30px"
+          right: "0"
         });
 
         $("#input").animate({
@@ -50,11 +51,11 @@ function interface(){
         .empty()
         .append("<i class='fa fa-angle-double-right' aria-hidden='true'></i>")
         .animate({
-          right: "270px"
+          right: "250px"
         });
 
         $("#input").animate({
-          width: "300px",
+          width: "250",
           opacity: 1
         });
     }
@@ -72,7 +73,17 @@ function interface(){
     if(!$(this).hasClass("menu-selected")){
       $(".menu-selected").removeClass("menu-selected");
       $(this).addClass("menu-selected");
+      $(".theme").removeClass("main");
+
+      if($(this).is("#menu-view-top")){
+        $("#menu-view-main").addClass("main");
+      } else if ($(this).is("#menu-edit-top")){
+        $("#menu-edit-main").addClass("main");
+      } else if ($(this).is("#menu-tools-top")){
+        $("#menu-tools-main").addClass("main");
+      }
     }
+
   });
 
   function enableEdits(){

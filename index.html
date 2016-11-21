@@ -48,6 +48,7 @@
   **  Save changes to layers
   **  Save styling on layers
   **  Remove EPSG Files
+  **  Fix Byggeri lag
   **  Make infoPanel.js universal
   **  Add wfs layers to interface (enable snapping)
   **  Clean and update GML-parser
@@ -84,21 +85,26 @@
           </p>
         </div>
       </div>
-      <div id="menu-edit-main" class="main">
+      <div id="menu-edit-main" class="main theme">
         <div id="editLayer">
           <div id="editButtons">
             <div id="polygons" class="unselectable-text"><p>Create polygon</p></div>
             <div id="lines" class="unselectable-text"><p>Create lines</p></div>
             <div id="markers" class="unselectable-text"><p>Create markers</p></div>
           </div>
-
-          <div id="wfsLayers">
-            <p>WFS layers</p>
-            <ul id="layers"></ul>
-            <div id="snapping" class="off unselectable-text">
-              <p>Snapping</p>
-            </div>
+          <div id="snapping" class="off unselectable-text">
+            <p>Snapping</p>
           </div>
+        </div>
+      </div>
+      <div id="menu-view-main" class="theme">
+        <div id="wfsLayers">
+          <p>WFS layers</p>
+          <ul id="layers"></ul>
+        </div>
+        <div id="wmsLayers">
+          <p>WMS layers</p>
+          <!-- <ul id="WMS-layers"></ul> -->
         </div>
       </div>
     </div>

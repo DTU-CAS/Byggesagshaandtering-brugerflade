@@ -20,7 +20,7 @@ html, body{
 
 #input{
   z-index: 901;
-  width: 300px;
+  width: 250px;
   min-height: 100%;
   text-align: center;
   color: #fff;
@@ -39,15 +39,20 @@ html, body{
 #openHide{
   position: absolute;
   top: 50%;
-  right: 270px;
+  right: 250px;
   cursor: pointer;
-  border-radius: 50%;
   height: 60px;
-  width: 60px;
+  width: 38px;
+  border-radius: 90px 0 0 90px;
+  -moz-border-radius: 90px 0 0 90px;
+  -webkit-border-radius: 90px 0 0 90px;;
   color: white;
   opacity: 0.75;
   background: #252830;
   z-index: 900;
+  transition: background-color .2s ease-in-out;
+  -moz-transition: background-color .2s ease-in-out;
+  -webkit-transition: background-color .2s;
 }
 
 #openHide:hover{
@@ -55,13 +60,18 @@ html, body{
 }
 
 #openHide > i {
-  margin-top: 21px;
-  margin-left: 12px;
+  margin-top: 20px;
+  margin-left: 18px;
 }
 
 .main{
   position: relative;
   z-index: 9001;
+  display: block !important;
+}
+
+.theme{
+  display: none;
 }
 
 .logo{
@@ -81,13 +91,13 @@ html, body{
  #menu{
    background: #1f2025;
    height: 40px;
+   white-space: nowrap;
  }
 
 .menu-item{
-  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
   height: 30px;
   margin-top: 10px;
-  width: 80px;
+  width: 70px;
   bottom: 0;
   background: #252830;
   position: relative;
@@ -96,21 +106,26 @@ html, body{
   cursor: pointer;
   margin-left: 2px;
   margin-right: 2px;
-  transition: all .05s ease-in-out;
-  -moz-transition: all .05s ease-in-out;
-  -webkit-transition: all .05s;
+  transition: all .1s ease-in-out;
+  -moz-transition: all .1s ease-in-out;
+  -webkit-transition: all .1s;
+  border-bottom: 2px solid #1f2025;
+  box-sizing: border-box;
+-moz-box-sizing: border-box;
+-webkit-box-sizing: border-box;
 }
 
 .menu-selected{
-  background: #1bc98e;
+  background: #1ca8dd;
+  border-bottom: none !important;
 }
 
 .menu-selected:hover{
-  background: #1bc98e !important;
+  background: #1ca8dd !important;
 }
 
 .menu-item:hover{
-  background: #10986a;
+  background: #1f6b88;
 }
 
 .menu-item > p{
@@ -209,7 +224,7 @@ html, body{
 }
 
 #layers > li:hover{
-  background: #1ca8dd;
+  background: #187a59;
   cursor: pointer;
   transition: all .10s ease-in-out;
   -moz-transition: all .10s ease-in-out;
@@ -224,7 +239,7 @@ html, body{
 }
 
 .layer-off{
-  background: #434857 !important;
+  /*background: #434857 !important;*/
 }
 
 #snapping{
@@ -252,6 +267,7 @@ html, body{
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  white-space: nowrap;
 }
 
 .selected{
@@ -267,4 +283,5 @@ html, body{
 .idTag{
   margin-top: 30px;
   color: #888;
+  white-space: nowrap;
 }
