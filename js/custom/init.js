@@ -195,24 +195,24 @@ function init(){
     {color: "#64f4b7"},
     false
   );
-  // addWfsLayer("ugis:T6831", "Adgangsveje",
-  //   {color: "#9f86ff"},
-  //   {color: "#ab97fb",
-  //    dashArray: "5, 5",
-  //    weight: 4,
-  //  },
-  //  false
-  // );
-  // addWfsLayer("ugis:T6833", "Ombyg og Renovering",
-  //   {color: "#e4d836"},
-  //   {color: "#f4e633"},
-  //   false
-  // );
-  // addWfsLayer("ugis:T7418", "Nybyggeri",
-  //   {color: "#e3a446"},
-  //   {color: "#ffc062"},
-  //   false
-  // );
+  addWfsLayer("ugis:T6831", "Adgangsveje",
+    {color: "#9f86ff"},
+    {color: "#ab97fb",
+     dashArray: "5, 5",
+     weight: 4,
+   },
+   false
+  );
+  addWfsLayer("ugis:T6833", "Ombyg og Renovering",
+    {color: "#e4d836"},
+    {color: "#f4e633"},
+    false
+  );
+  addWfsLayer("ugis:T7418", "Nybyggeri",
+    {color: "#e3a446"},
+    {color: "#ffc062"},
+    false
+  );
   // addWfsLayer("ugis:T18454", "Streetfood");
 
   // Start loading geometry and attributes from MSSQL server with ID

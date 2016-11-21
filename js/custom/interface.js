@@ -28,6 +28,38 @@ function interface(){
 
   });
 
+  $("#openHide").click(function(){
+    if($(this).hasClass("open")){
+      $(this)
+        .removeClass("open")
+        .addClass("closed")
+        .empty()
+        .append("<i class='fa fa-angle-double-left' aria-hidden='true'></i>")
+        .animate({
+          right: "-30px"
+        });
+
+        $("#input").animate({
+          width: "0",
+          opacity: 0
+        });
+    } else {
+      $(this)
+        .removeClass("closed")
+        .addClass("open")
+        .empty()
+        .append("<i class='fa fa-angle-double-right' aria-hidden='true'></i>")
+        .animate({
+          right: "270px"
+        });
+
+        $("#input").animate({
+          width: "300px",
+          opacity: 1
+        });
+    }
+  });
+
   $("#snapping").click(function(){
     if($(this).hasClass("off")){
       $(this).removeClass("off").addClass("on");
@@ -94,6 +126,7 @@ function interface(){
 $(document).dblclick(function() {
   disableEdits();
   $(".selected").removeClass("selected");
+  $("#map").trigger("click"); // fix
 });
 
   var deleteShape = function (e) {
