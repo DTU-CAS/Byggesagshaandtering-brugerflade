@@ -134,12 +134,12 @@ function interface(){
       // e.layer.setStyle({color: 'blue'});
     })
     .on('editable:drawing:end', function (e){
-      bob = e;
       if(e.layer._parts){
         if(e.layer._parts.length > 0){
-
+          var json = e.layer.toGeoJSON();
+          json.properties = {"ID": QueryString().ID};
           map.removeLayer(e.layer);
-          var startLayer = eventJSON(e.layer.toGeoJSON(),
+          addLayer = eventJSON(json,
             {color: "#1ca8dd"},
             {color: "#28edca"},
             true
@@ -161,5 +161,14 @@ $(document).dblclick(function() {
     if (e.layer instanceof L.Path) e.layer.on('click', L.DomEvent.stop).on('click', deleteShape, e.layer);
   });
 
+  if($( window ).width() < 900){
+    if($("#openHide").hasClass("open")){
+      $("#openHide").click();
+    }
+  } else if($(window).width() > 900){
+    if($("#openHide").hasClass("closed")){
+      $("#openHide").click();
+    }
+  }
 
 }

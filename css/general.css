@@ -108,7 +108,7 @@ html, body{
 .menu-item{
   height: 30px;
   margin-top: 10px;
-  width: 70px;
+  width: 110px;
   bottom: 0;
   background: #252830;
   position: relative;
@@ -272,6 +272,26 @@ html, body{
   text-align: left;
 }
 
+#bygID{
+  background: #252830;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+  position: relative;
+  display: block;
+  bottom: 2px;
+  margin: 0 auto;
+  color: white;
+  width: 300px;
+  height: 30px;
+  text-align: center;
+  z-index: 1002;
+}
+
+#bygID > p{
+  margin: 0;
+  margin-top: 10px;
+  padding-top: 6px;
+  font-weight: bolder;
+}
 
 #snapping > p{
   padding-left: 42px;
@@ -312,4 +332,52 @@ html, body{
   white-space: nowrap;
   text-align: left;
   margin-left: 40px;
+}
+
+.dropDown > p{
+ cursor: pointer;
+ padding-left: 6px !important;
+ padding-right: 6px !important;
+}
+
+.dropDown:hover{
+  background: #1ca8dd;
+}
+
+.dropDown-content {
+  position: absolute;
+  display: none;
+  background: #434857;
+  color: #fff;
+  min-width: 160px;
+  overflow: auto;
+  z-index: 901;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
+
+.dropDown-content > ul{
+  list-style: none;
+  margin: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.dropDown-content > ul > li{
+  margin-left: -40px;
+  padding-left: 16px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.dropDown-content > ul > li:hover{
+  cursor: pointer;
+  background: #1ca8dd;
+}
+
+.show {display:block;}
+
+@media (max-width:700px){
+  #bygID{
+    display: none;
+  }
 }

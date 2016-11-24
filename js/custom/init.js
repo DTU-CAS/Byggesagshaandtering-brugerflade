@@ -1,5 +1,21 @@
 // Initialize the interface
 function init(){
+  // Query the URL for parameters
+  var query = QueryString();
+  if(query){jQuery("#bygID > p").text(query.ID);}
+
+  $( window ).resize(function() {
+    if($( window ).width() < 900){
+      if($("#openHide").hasClass("open")){
+        $("#openHide").click();
+      }
+    } else if($(window).width() > 900){
+      if($("#openHide").hasClass("closed")){
+        $("#openHide").click();
+      }
+    }
+  });
+
   // create the map
   map = L.map('map', {
     center: [55.787016, 12.522536],
@@ -27,6 +43,19 @@ function init(){
     edgeBufferTiles: 1
   }).addTo(map);
 
+  // GST skaermkort 2016
+  var	GST_Skaerm = L.tileLayer.wms('https://kortforsyningen.kms.dk/?servicename=topo_skaermkort', {
+    login: 'qgisdk',
+    password: 'qgisdk',
+    version: '1.1.1',
+    layers: 'dtk_skaermkort_graa_3',
+    format: 'image/png',
+    maxZoom: 21,
+    maxNativeZoom: 18,
+    attribution: '&copy; <a href="http://gst.dk">GeoDanmark</a>',
+    edgeBufferTiles: 1
+  });
+
   var OSMbasemap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,' +
           '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
@@ -37,8 +66,9 @@ function init(){
 
   // Add to layer control
   var basemaps = {
-    "GST": GST_Ortho,
-    "OSM": OSMbasemap
+    "Luftfoto": GST_Ortho,
+    "Skærmkort": GST_Skaerm,
+    "Open Street Maps": OSMbasemap
   };
 
   var overlayMaps = {
@@ -243,15 +273,12 @@ function init(){
   // addWfsLayer("ugis:T18454", "Streetfood");
 
   // Start loading geometry and attributes from MSSQL server with ID
-  var startLayer = eventJSON(json1,
-    {color: "#1ca8dd"},
-    {color: "#28edca"},
-    true
-  ).addTo(map);
+  // var startLayer = eventJSON(json1,
+  //   {color: "#1ca8dd"},
+  //   {color: "#28edca"},
+  //   true
+  // ).addTo(map);
 
-  // Query the URL for parameters
-  var query = QueryString();
-  if(query){jQuery(".theme").append("<p class='idTag'>" + "Byggesag: " + query.ID + "</p>");}
 
   interface();
 }

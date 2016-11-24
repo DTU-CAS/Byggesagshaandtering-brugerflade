@@ -62,4 +62,6 @@ td{
 .rowName{
   color: #999;
   font-weight: bold;
+  padding-left: 6px;
+  padding-right: 6px;
 }
