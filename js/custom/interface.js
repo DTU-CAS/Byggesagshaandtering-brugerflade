@@ -38,12 +38,12 @@ function interface(){
         .css("background", "#252830;")
         .animate({
           right: "0"
-        });
+        }, 'fast');
 
         $("#input").animate({
           width: "0",
           opacity: 0
-        });
+        }, 'fast');
     } else {
       $(this)
         .removeClass("closed")
@@ -52,12 +52,12 @@ function interface(){
         .append("<i class='fa fa-angle-double-right' aria-hidden='true'></i>")
         .animate({
           right: "250px"
-        });
+        }, 'fast');
 
         $("#input").animate({
           width: "250",
           opacity: 1
-        });
+        }, 'fast');
     }
   });
 
@@ -132,12 +132,25 @@ function interface(){
     .on('editable:created', function (e) {
       e.layer.options.editable = true;
       // e.layer.setStyle({color: 'blue'});
+    })
+    .on('editable:drawing:end', function (e){
+      bob = e;
+      if(e.layer._parts){
+        if(e.layer._parts.length > 0){
+
+          map.removeLayer(e.layer);
+          var startLayer = eventJSON(e.layer.toGeoJSON(),
+            {color: "#1ca8dd"},
+            {color: "#28edca"},
+            true
+          ).addTo(map);
+        }
+      }
     });
 
 $(document).dblclick(function() {
   disableEdits();
   $(".selected").removeClass("selected");
-  $("#map").trigger("click"); // fix
 });
 
   var deleteShape = function (e) {

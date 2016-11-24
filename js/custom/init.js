@@ -47,126 +47,129 @@ function init(){
 
   var mainControl = L.control.layers(basemaps, overlayMaps, {collapsed: false}).addTo(map);
 
+  var layerContainer = $("<div class='layer-container'></div>");
+  var layerList = $("<ul class='layer-list'></ul>");
+
   var wmsLayers = [
-    // ["6832", "Byggepladser"],
-    // ["6834", "Parkering"],
-    // ["6831", "Adgangsveje"],
-    // ["6833", "Ombyg og Renovering"],
-    // ["7418", "Nybyg"],
+    ["6832", "Byggepladser"],
+    ["6834", "Parkering"],
+    ["6831", "Adgangsveje"],
+    ["6833", "Ombyg og Renovering"],
+    ["7418", "Nybyg"],
     ["7428", "Byggeri"],
-    ["18454", "Streetfood"],
+    ["18454", "Streetfood"]
   ];
+  function addWMSlayer(string, name){
+    var layer = L.tileLayer.wms("http://services.nirasmap.niras.dk/kortinfo/services/Wms.ashx?", {
+      site: 'Provider',
+      page: 'DTU',
+      userName: 'DTUView',
+      password: 'Bruger12',
+      loginType: "KortInfo",
+      service: 'WMS',
+      version: "1.1.1",
+      layers: string,
+      transparent: true,
+      format: 'image/png',
+      maxZoom: 21,
+      maxNativeZoom: 18,
+      attribution: '&copy; <a href="http://DTU.dk">Danish Technical University</a>'
+    });
 
-  function addWMS(arr, getFeatureInfo){
-    var layerContainer = $("<div class='layer-container'></div>");
-    var layerList = $("<ul='layer-list'></ul>");
-
-    var bob = function(li, layer){
-      if($(this).hasClass("on")){
+    var listItem = $("<li class='unselectable-text layer layer-off'>" + name + "</li>");
+    listItem.on("click", function(){
+      if($(this).hasClass("layer-on")){
+        $(this).removeClass("layer-on").addClass("layer-off");
         map.removeLayer(layer);
-        $(this).removeClass("on").addClass("off");
       } else {
+        $(this).addClass("layer-on").removeClass("layer-off");
         map.addLayer(layer);
-        $(this).removeClass("off").addClass("on");
       }
+    });
+    $(layerList).append(listItem);
+  }
+  for(var wms = 0; wms < wmsLayers.length; wms++){
+    addWMSlayer(wmsLayers[wms][0], wmsLayers[wms][1]);
+  }
+  $(layerContainer).append(layerList);
+  $("#wmsLayers").append(layerContainer);
+
+  function addGFI(e){
+    var layerString = "";
+    for (var j = 0; j < wmsLayers.length; j++){
+      layerString+= wmsLayers[j][0];
+      if(j !== wmsLayers.length -1){
+        layerString+= ",";
+      }
+    }
+
+    var latLng = e.latlng;
+    var point = map.latLngToContainerPoint(latLng, map.getZoom());
+    var size = map.getSize();
+
+    // convert boundbox to srs
+    var WGS84Param = proj4("EPSG:4326");
+    var coordinateSystem = proj4(epsg["25832"]);
+    var bbox = bounds2Arr(map.getBounds(), true);
+    bbox[0] = proj4(WGS84Param, coordinateSystem, bbox[0]);
+    bbox[1] = proj4(WGS84Param, coordinateSystem, bbox[1]);
+    bbox = arr2bounds(bbox, true).toBBoxString();
+
+    var layerURL = "http://services.nirasmap.niras.dk/kortinfo/services/Wms.ashx?";
+    var params = {
+      site: 'Provider',
+      page: 'DTU',
+      request: 'GetFeatureInfo',
+      userName: 'DTUView',
+      password: 'Bruger12',
+      service: 'WMS',
+      version: '1.1.1',
+      layers: "6832, 6834, 6831",
+      styles: "",
+      srs: 'EPSG:25832',
+      bbox: bbox,
+      width: size.x,
+      height: size.y,
+      query_layers: "6832, 6834, 6831",
+      x: point.x,
+      y: point.y,
+      type: 'nirasmap',
+      feature_count: 1,
+      info_format: 'text/xml'
     };
 
-    for (var k = 0; k < arr.length; k++){
-      var listItem = $("<li class='off'>" + arr[k][1] + "</li>");
-      
-      var layer = L.tileLayer.wms("http://services.nirasmap.niras.dk/kortinfo/services/Wms.ashx?", {
-        site: 'Provider',
-        page: 'DTU',
-        userName: 'DTUView',
-        password: 'Bruger12',
-        loginType: "KortInfo",
-        service: 'WMS',
-        version: "1.1.1",
-        layers: arr[k][0],
-        transparent: true,
-        format: 'image/png',
-        maxZoom: 21,
-        maxNativeZoom: 18,
-        attribution: '&copy; <a href="http://DTU.dk">Danish Technical University</a>'
-      });
+    content = layerURL + L.Util.getParamString(params, layerURL, true);
 
-      $(layerList).append(listItem);
-      $(layerContainer).append(layerList);
+    $.ajax({url: content, success: function(result){
+      fields = result.getElementsByTagName("field");
 
-      // mainControl.addOverlay(layer, arr[k][1]);
-    }
-    $("#wmsLayers").append(layerContainer);
-
-    if(getFeatureInfo === true){
-      var layerString = "";
-      for (var j = 0; j < arr.length; j++){
-        layerString+= arr[j][0];
-        if(j !== arr.length -1){
-          layerString+= ",";
+      if(fields.length > 0){
+        var tableContent = "<table>";
+        for(var i = 0; i < fields.length; i++){
+          tableContent +=
+          "<tr class='table-row'>" +
+          "<td>" + $(fields[i]).attr("name") + "</td>" +
+          "<td>" + fields[i].innerHTML + "</td>";
         }
+        tableContent += "</table>";
+
+        L.popup({ maxWidth: "600px"})
+          .setLatLng(latLng)
+          .setContent(tableContent)
+          .openOn(map);
       }
-
-      // Modified from: Ryan Clark @ GitHub
-      map.on('click', function(e){
-        var latLng = e.latlng;
-        var point = map.latLngToContainerPoint(latLng, map.getZoom());
-        var size = map.getSize();
-
-        // convert boundbox to srs
-        var WGS84Param = proj4("EPSG:4326");
-        var coordinateSystem = proj4(epsg["25832"]);
-        var bbox = bounds2Arr(map.getBounds(), true);
-        bbox[0] = proj4(WGS84Param, coordinateSystem, bbox[0]);
-        bbox[1] = proj4(WGS84Param, coordinateSystem, bbox[1]);
-        bbox = arr2bounds(bbox, true).toBBoxString();
-
-        var params = {
-          site: 'Provider',
-          page: 'DTU',
-          request: 'GetFeatureInfo',
-          userName: 'DTUView',
-          password: 'Bruger12',
-          service: 'WMS',
-          version: '1.1.1',
-          layers: "6832",
-          styles: "",
-          srs: 'EPSG:25832',
-          bbox: bbox,
-          width: size.x,
-          height: size.y,
-          query_layers: "6832",
-          x: point.x,
-          y: point.y,
-          type: 'nirasmap',
-          feature_count: 1,
-          info_format: 'text/xml'
-        };
-
-        content = layer._url + L.Util.getParamString(params, layer._url, true);
-
-        $.ajax({url: content, success: function(result){
-          fields = result.getElementsByTagName("field");
-
-          if(fields.length > 0){
-            var tableContent = "<table>";
-            for(var i = 0; i < fields.length; i++){
-              tableContent +=
-              "<tr class='table-row'>" +
-              "<td>" + $(fields[i]).attr("name") + "</td>" +
-              "<td>" + fields[i].innerHTML + "</td>";
-            }
-            tableContent += "</table>";
-
-            L.popup({ maxWidth: "600px"})
-              .setLatLng(latLng)
-              .setContent(tableContent)
-              .openOn(map);
-          }
-        }});
-      });
-    }
+    }});
   }
-  addWMS(wmsLayers, false);
+
+  $("#getFeatureInfo").click(function(e){
+    if($(this).hasClass("off")){
+      $(this).removeClass("off").addClass("on");
+      map.on('click', addGFI);
+    } else {
+      $(this).removeClass("on").addClass("off");
+      map.off('click', addGFI);
+    }
+  });
 
   function addWfsLayer(string, name, style, highlight, editable){
     var wfsBase = "http://services.nirasmap.niras.dk/kortinfo/services/Wfs.ashx?";

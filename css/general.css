@@ -22,9 +22,8 @@ html, body{
   z-index: 901;
   width: 250px;
   min-height: 100%;
-  text-align: center;
   color: #fff;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  box-shadow: -3px 0px 7px rgba(0, 0, 0, 0.45);
   text-align: center;
   background:#252830;
   color: #fff;
@@ -34,6 +33,18 @@ html, body{
   flex: 1;
   min-height: 100%;
   background:#fff;
+ }
+
+ #send{
+   background: #12ab81;
+   width: 160px;
+   color: white;
+   padding: 2px;
+   font-weight: bolder;
+   cursor: pointer;
+   margin-left: 40px;
+   margin-top: 70px;
+   box-shadow: 0 2px 5px rgba(0,0,0,0.4);
  }
 
 #openHide{
@@ -205,25 +216,25 @@ html, body{
   margin-top: 25px;
 }
 
-#layers{
+#layers, .layer-list{
   list-style: none;
   text-align: left;
   font-size: smaller;
   max-width: 160px;
 }
 
-#layers > li{
+.layer{
   background: #434857;
   padding: 8px;
   margin-top: 2px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.4);
 }
 
-#layers > li > p{
+.layer > p{
   margin: 0;
 }
 
-#layers > li:hover{
+.layer:hover{
   background: #187a59;
   cursor: pointer;
   transition: all .10s ease-in-out;
@@ -242,7 +253,14 @@ html, body{
   /*background: #434857 !important;*/
 }
 
-#snapping{
+#wfsLayers > p, #wmsLayers > p{
+  white-space: nowrap;
+  text-align: left;
+  margin-left: 40px;
+  margin-bottom: -6px;
+}
+
+#snapping, #getFeatureInfo{
   transition: all .10s ease-in-out;
   -moz-transition: all .10s ease-in-out;
   -webkit-transition: all .10s;
@@ -251,14 +269,22 @@ html, body{
   margin-left: 40px;
   margin-top: 36px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+  text-align: left;
 }
 
+
 #snapping > p{
+  padding-left: 42px;
+}
+#getFeatureInfo > p{
+  padding-left: 26px;
+}
+#snapping > p, #getFeatureInfo > p{
   margin: 0;
   font-size: smaller;
 }
 
-#snapping:hover{
+#snapping:hover, #getFeatureInfo:hover{
   cursor: pointer;
 }
 
@@ -284,4 +310,6 @@ html, body{
   margin-top: 30px;
   color: #888;
   white-space: nowrap;
+  text-align: left;
+  margin-left: 40px;
 }

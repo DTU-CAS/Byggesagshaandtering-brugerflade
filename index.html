@@ -14,8 +14,8 @@
   <!-- leaflet -->
   <!-- leafletJS: Copyright (c) 2010-2016, Vladimir Agafonkin -->
   <script src="js/leaflet.js"></script>
-  <script src="js/leaflet.GeometryUtil.js"></script>
-  <script src="js/leaflet.snap.js"></script>
+  <!-- <script src="js/leaflet.GeometryUtil.js"></script> -->
+  <!-- <script src="js/leaflet.snap.js"></script> -->
   <script src="js/leaflet.path.drag.js"></script>
   <script src="js/leaflet.editable.js"></script>
   <script src="js/leaflet.edgeBuffer.js"></script>
@@ -95,6 +95,9 @@
           <div id="snapping" class="off unselectable-text">
             <p>Snapping</p>
           </div>
+          <div id="send" class="unselectable-text">
+            <p>Send to Database</p>
+          </div>
         </div>
       </div>
       <div id="menu-view-main" class="theme">
@@ -104,7 +107,11 @@
         </div>
         <div id="wmsLayers">
           <p>WMS layers</p>
-          <!-- <ul id="WMS-layers"></ul> -->
+        </div>
+        <div id="getFeatureInfo" class="off unselectable-text">
+          <p>
+            GetFeatureInfo
+          </p>
         </div>
       </div>
     </div>
