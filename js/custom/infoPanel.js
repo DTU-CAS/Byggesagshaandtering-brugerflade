@@ -51,7 +51,6 @@
 
          $(".dropDown-content > ul > li").click(function(){
            layer.feature.properties.Type = $(this).text();
-            console.log(layer.feature.properties);
             $(".dropDown > p").html($(this).text() +
               "&nbsp;&nbsp;&nbsp;" +
               "<i class='fa fa-caret-down' aria-hidden='true'></i></p>"
@@ -60,21 +59,21 @@
 
          $(".leaflet-popup").css("width", "284px");
 
-        if(map.editTools.drawing() === true){
+        if(layer.editEnabled() === true){
           $("#editGeom").removeClass("disabled-edit").addClass("enabled-edit");
-          $("#editGeom").first().text("Save edits");
+          $("#editGeom").first().text("Gem geometri");
         }
 
          $("#editGeom").click(function(e){
            if($(this).hasClass("disabled-edit")){
              layer.enableEdit();
              $(this).removeClass("disabled-edit").addClass("enabled-edit");
-             $(this).first().text("Save edits");
+             $(this).first().text("Gem geometri");
              map.closePopup();
            } else {
              layer.toggleEdit();
              $(this).removeClass("enabled-edit").addClass("disabled-edit");
-             $(this).first().text("Edit Geometry");
+             $(this).first().text("Rediger");
            }
          });
 

@@ -168,10 +168,10 @@ function init(){
       info_format: 'text/xml'
     };
 
-    content = layerURL + L.Util.getParamString(params, layerURL, true);
+    var content = layerURL + L.Util.getParamString(params, layerURL, true);
 
     $.ajax({url: content, success: function(result){
-      fields = result.getElementsByTagName("field");
+      var fields = result.getElementsByTagName("field");
 
       if(fields.length > 0){
         var tableContent = "<table>";
@@ -265,11 +265,11 @@ function init(){
   //   {},
   //   false
   // );
-  addWfsLayer("ugis:T7418", "Nybyggeri",
-    {color: "#e3a446"},
-    {color: "#ffc062"},
-    false
-  );
+  // addWfsLayer("ugis:T7418", "Nybyggeri",
+  //   {color: "#e3a446"},
+  //   {color: "#ffc062"},
+  //   false
+  // );
   // addWfsLayer("ugis:T18454", "Streetfood");
 
   // Start loading geometry and attributes from MSSQL server with ID

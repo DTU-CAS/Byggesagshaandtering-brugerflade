@@ -1,31 +1,28 @@
 function interface(){
+
+  // Hover function
   $("#polygons").click(function(){
-    $(".selected").removeClass("selected");
+    if($(this).hasClass("selected")){
+      $(".selected").removeClass("selected");
       disableEdits();
+    } else {
+      disableEdits();
+      $(".selected").removeClass("selected");
       map.editTools.startPolygon();
       $(this).addClass("selected");
+    }
   });
 
   $("#lines").click(function(){
-    $(".selected").removeClass("selected");
+    if($(this).hasClass("selected")){
+      $(".selected").removeClass("selected");
       disableEdits();
-      map.editTools.startPolyline();
-      $(this).addClass("selected");
-  });
-
-  $("#markers").click(function(){
-    $(".selected").removeClass("selected");
-    disableEdits();
-    map.editTools.startMarker();
-    $(this).addClass("selected");
-
-    $("#map").one("click", function(){
+    } else {
       disableEdits();
       $(".selected").removeClass("selected");
-      $("#map").css("cursor", "inherit");
-      console.log("i fired");
-    });
-
+      $(this).addClass("selected");
+      map.editTools.startPolyline();
+    }
   });
 
   $("#openHide").click(function(){
@@ -83,7 +80,6 @@ function interface(){
         $("#menu-tools-main").addClass("main");
       }
     }
-
   });
 
   function enableEdits(){
@@ -127,11 +123,11 @@ function interface(){
      }
   })
     .on('editable:editing', function (e) {
-      // e.layer.setStyle({color: 'DarkRed'});
+      // change style
     })
     .on('editable:created', function (e) {
       e.layer.options.editable = true;
-      // e.layer.setStyle({color: 'blue'});
+      // reverse style
     })
     .on('editable:drawing:end', function (e){
       if(e.layer._parts){
@@ -139,7 +135,7 @@ function interface(){
           var json = e.layer.toGeoJSON();
           json.properties = {"ID": QueryString().ID};
           map.removeLayer(e.layer);
-          addLayer = eventJSON(json,
+          var addLayer = eventJSON(json,
             {color: "#1ca8dd"},
             {color: "#28edca"},
             true
